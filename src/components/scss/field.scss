@@ -1,0 +1,14 @@
+.kekkai-field {
+  div.kekkai-display {
+    vertical-align: middle;
+    align-items: center;
+  }
+  div.kekkai-editor {
+    &>* {
+      width: 100%;
+    }
+  }
+  &.invalid * {
+    cursor: help;
+  }
+}

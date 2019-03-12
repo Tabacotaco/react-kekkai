@@ -1,0 +1,110 @@
+div.kekkai-modal {
+  z-index: 10000;
+  position: fixed;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+  outline: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+  transition: opacity .15s linear;
+  &>div.dialog {
+    transform: none;
+    transition: transform .3s ease-out, -webkit-transform .3s ease-out;
+    margin: 1.75rem auto;
+    &>div.content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      pointer-events: auto;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid rgba(0, 0, 0, .2);
+      border-radius: .3rem;
+      outline: 0;
+      &>div.header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 1rem 1rem;
+        border-bottom: 1px solid #dee2e6;
+        border-top-left-radius: .3rem;
+        border-top-right-radius: .3rem;
+        &>.title {
+          margin-top: 0;
+          margin-bottom: 0;
+          line-height: 1.5;
+          &>i.fa {
+            letter-spacing: 8px;
+          }
+        }
+        &>.close {
+          cursor: pointer;
+          padding: 1rem 1rem;
+          margin: -1rem -1rem -1rem auto;
+          background-color: transparent;
+          border: 0;
+          appearance: none;
+          float: right;
+          font-size: 1.5rem;
+          font-weight: 700;
+          line-height: 1;
+          color: #000;
+          text-shadow: 0 1px 0 #fff;
+          opacity: .5;
+        }
+      }
+      &>div.body {
+        position: relative;
+        flex: 1 1 auto;
+        padding: 1rem;
+      }
+      &>div.footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 1rem;
+        border-top: 1px solid #dee2e6;
+        border-bottom-right-radius: .3rem;
+        border-bottom-left-radius: .3rem;
+        &>:not(:last-child) {
+          margin-right: .25rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  div.kekkai-modal>div.dialog {
+    width: 95%;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  div.kekkai-modal>div.dialog {
+    width: 90%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.kekkai-modal>div.dialog {
+    width: 80%;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  div.kekkai-modal>div.dialog {
+    width: 70%;
+  }
+}
+
+@media (min-width: 1200px) {
+  div.kekkai-modal>div.dialog {
+    width: 60%;
+  }
+}

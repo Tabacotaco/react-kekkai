@@ -1,0 +1,324 @@
+div.kekkai-container>div.kekkai-list-panel {
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid #e9e9e9;
+  &>div {
+    display: flex;
+    &:not(.data-not-found) {
+      &>div:not(.locked)::before {
+        content: "";
+        width: 8px;
+        position: absolute;
+        pointer-events: none;
+        height: 100%;
+        top: 0;
+        left: -8px;
+        box-shadow: 4px 0 4px hsla(0,0%,39.2%,.1);
+        z-index: 1;
+      }
+    }
+    &:not(.dropdowning)>div.content>table tr {
+      &.hover {
+        background: linear-gradient(to bottom, #E5EEF8, #BACFEB) !important;
+      }
+      &.row-pointer.active {
+        filter: blur(1px);
+        background-image: none;
+        outline: 0;
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+      }
+      &.invalid-row {
+        &.hover {
+          background: linear-gradient(to bottom, #f8d7da, #E25966) !important;
+        }
+        &>td.invalid:hover {
+          animation: invalid-bring .8s linear infinite;
+        }
+      }
+    }
+    &:not(.editing)>div.header>table tr>th {
+      position: relative;
+      &>div.resizable {
+        position: absolute;
+        width: 12px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        cursor: col-resize;
+      }
+      &.sortable {
+        &>div>span {
+          cursor: pointer;
+          &::after {
+            margin-left: 4px;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+          }
+          &:hover::after {
+            position: absolute;
+            margin: 2px 2px 2px 4px;
+          }
+        }
+        &:not(.asc):not(.desc)>div>span:hover::after {
+          opacity: 0;
+          animation: sorting-cancel .4s linear;
+        }
+        &.asc {
+          &>div>span::after {
+            content: "\f160";
+          }
+          &>div>span:hover::after {
+            animation: sorting-byasc .4s linear;
+          }
+        }
+        &.desc {
+          &>div>span::after {
+            content: "\f161";
+          }
+          &>div>span:hover::after {
+            animation: sorting-bydesc .4s linear;
+          }
+        }
+      }
+    }
+    &>div {
+      display: inline-block;
+      vertical-align: top;
+      position: relative;
+      &:not(.locked) {
+        flex: 1;
+      }
+      &.locked:not(.menu) {
+        overflow: hidden;
+      }
+      &.header {
+        &:not(.locked) {
+          margin-right: auto;
+          overflow: hidden;
+        }
+        &.locked:not(.menu) {
+          border-top-left-radius: 4px;
+        }
+        &.locked.menu {
+          display: flex;
+          border-top-right-radius: 4px;
+          width: 17px;
+          background: #f7f7f7;
+          border-color: #e9e9e9;
+          border-style: solid;
+          border-width: 1px 1px 0 0;
+          box-shadow: -4px 0 4px rgba(100, 100, 100, 0.1);
+          &>div.kekkai-dropdown {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            &>a.kekkai-nav-btn {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              margin-top: -2px;
+              height: 100%;
+              width: 100%;
+            }
+            &>ul.menu{
+              overflow-y: auto;
+              max-height: 50vh;
+              min-height: 171px;
+              &>li>a.kekkai-nav-btn>i.fa {
+                color: #004898;
+              }
+            }
+          }
+        }
+        &>table tr {
+          &>th {
+            background: #f7f7f7;
+            font-weight: bold;
+            height: 38px;
+            user-select: none;
+            &[rowspan="2"] {
+              height: 76px !important;
+            }
+            &:not(.row-selection):not(.filter-header) {
+              padding: 8px 12px;
+              text-align: left;
+              color: #5C6B77;
+            }
+            &.filter-header>form {
+              display: flex;
+              align-items: center;
+              font-weight: normal;
+              &>div.kekkai-editor>* {
+                width: 100%;
+              }
+            }
+            &>div {
+              display: flex;
+              &:not(.resizable) {
+                &[draggable=true] {
+                  cursor: grab;
+                  &:active, &:focus {
+                    cursor: grabbing !important;
+                  }
+                }
+                &.allowed-reordering {
+                  position: relative;
+                  &>div {
+                    position: absolute;
+                    z-index: 1;
+                    width: 30%;
+                    top: 0;
+                    bottom: 0;
+                    &.before {
+                      left: 0;
+                      &.hovering+div+span {
+                        transform: translate(100%);
+                      }
+                    }
+                    &.behind {
+                      right: 0;
+                      &.hovering+span {
+                        transform: translate(-20px);
+                      }
+                    }
+                  }
+                }
+                &>span {
+                  margin-right: auto;
+                  white-space: nowrap;
+                  &+div.kekkai-dropdown>ul.menu>li>a.kekkai-nav-btn>i.fa {
+                    color: #004898;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      &.content {
+        min-height: 230px;
+        max-height: 60vh;
+        &.locked {
+          border-bottom-left-radius: 4px;
+          padding-bottom: 17px;
+          &>table>tbody>tr.invalid-row>td:first-child {
+            border-left: 2px solid red;
+          }
+        }
+        &:not(.locked) {
+          border-bottom-right-radius: 4px;
+          overflow: scroll;
+        }
+        &>table tr {
+          &:nth-child(2n) {
+            background-color: #eff6fa;
+          }
+          &.row-pointer {
+            cursor: pointer;
+          }
+          &.invalid-row {
+            background-color: #f8d7da;
+            &>td {
+              color: #721c24;
+              border-color: #f5c6cb;
+              &.invalid {
+                border-left: 2px solid red;
+              }
+            }
+          }
+          &>td {
+            padding: 0;
+            color: #666;
+            &.text-overflow {
+              position: relative;
+              &>div.kekkai-display {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+            &.text-left {
+              text-align: left !important;
+            }
+            &.text-right {
+              text-align: right !important;
+            }
+            &.text-center {
+              text-align: center !important;
+            }
+            &>div.kekkai-editor>* {
+              width: 100%;
+            }
+            &>div.kekkai-display {
+              margin: 8px 12px;
+            }
+          }
+        }
+      }
+      &>table {
+        border-spacing: 0;
+        border-width: 1px 0 0 1px;
+        border-color: #e9e9e9;
+        border-style: solid;
+        tr {
+          &>* {
+            vertical-align: middle;
+            border-width: 0 1px 1px 0;
+            border-color: #e9e9e9;
+            border-style: solid;
+            &.row-selection,
+            &.row-menu {
+              text-align: center;
+              width: 48px;
+              padding-top: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes invalid-bring {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: .6;
+  }
+}
+
+@keyframes sorting-bydesc {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes sorting-cancel {
+  from {
+    opacity: 1;
+    content: "\f161";
+  }
+  to {
+    opacity: 0;
+    content: "\f161";
+  }
+}
+
+@keyframes sorting-byasc {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
