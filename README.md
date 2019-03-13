@@ -1,6 +1,8 @@
 # react-kekkai
 It's a component library for React, and named 'Kekkai'(Japanese). Let's see Kekkai via the agenda as follows:
 - [What is Kekkai?](#what-is-kekkai)
+- [Abount Install](#abount-install)
+- [Import Kekkai](#import-kekkai)
 - [5 Components](#5-components)
 - [API](#api)
 
@@ -23,7 +25,42 @@ The pattern about using 5 components is...
   </KekkaiDataview>
 )}/>
 ```
-It looks like a magic circle, so I named it as 'Kekkai'.  In Japanese, 'Kekkai' means magic circle.
+In Japanese, 'Kekkai' means magic circle, and the pattern just looks like a magic circle, so I named it as 'Kekkai' ^^.
+
+## Abount Install
+- 1. Download from NPM<br>
+  `npm i react moment numeral react-kekkai -s`
+- 2. Update your webpack.config.js<br>
+  Find `resolve.alias`, and append as follows:
+  ```
+  resolve: {
+    extensions: [/* Your extensions ... */],
+    alias: {
+      react: path.resolve('./node_modules/react'),
+      moment: path.resolve('./node_modules/moment'),
+      numeral: path.resolve('./node_modules/numeral'),
+
+      /* Your alias ... */
+    }
+  }
+  ```
+
+## Import Kekkai
+Except the kekkai components, also import the CSS.
+```
+import {
+  // Components
+  KekkaiContainer, KekkaiDataview, KekkaiField, KekkaiDisplay, KekkaiEditor,
+
+  // Option Enums
+  LayoutOpts, TriggerOpts, EditingModeOpts,
+
+  // Operations Building Helper
+  Todo, TodoScripts
+} from 'react-kekkai';
+
+import 'react-kekkai/dist/index.css';
+```
 
 ## 5 Components
 Using this pattern concept to accomplish building the different layout via the only one way.  It will reduce our work for HTML, and make sure all the layout could follow the same business rule.  Now, let's check the purposes of these 5 components:
@@ -39,5 +76,6 @@ Using this pattern concept to accomplish building the different layout via the o
   When data need to be edited, we could use `<KekkaiEditor />` to pack the form items.  We could also bind the events to append rule to control editable status / handle data changed / do validation and tip, and make every form item be unified into one solution by these 3 events.  By the way, the form item which is packed by `<KekkaiEditor />` must have supported properties of 'value' and 'onChange'.
 
 ## API
+To be continued...
 
 by Taco (tabacotaco@gmail.com)
