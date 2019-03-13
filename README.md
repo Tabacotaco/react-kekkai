@@ -237,16 +237,59 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
   This option will be actived when the panel is `LayoutOpts.Card`.  To define `<KekkaiDataview />`'s width, and default is `{ def: 12 }`.
 
 - ##### Events
-  - `onSelected`: `(isChecked) => void`<br>
+  - `onSelected`: `(isChecked, data) => void`<br>
   This event will be fired when user select the data by Data-Row Selection.
-  
+    - Parameters
+      - `isChecked`: `boolean` - `true` means data is selected, and `false` is deselected.
 
-- ##### Methods
+      - `data`: [KekkaiModel](#KekkaiModel) - The target data.
 
 #### `<KekkaiField />`
 - ##### Options(props)
-- ##### Events
-- ##### Methods
+  - *`name`: `string`<br>
+  Binding data field name.
+
+  - `key`: `string`<br>
+  If you wanna build a pseudo column, you must have to set this property.  Just give it a unique name.
+
+  - *`label`: `string`<br>
+  Define description for field. When panel is `LayoutOpts.List`, this label will show on the header.  In other panel, it will become `<label />`.
+
+  - `align`: `string`<br>
+  Set the text-align in `<KekkaiDisplay />`, default is `left`.
+
+  - `sortable`: `boolean` | `{ seq, dir }`<br>
+  This option will make Kekkai generate sort parameters.  Set as `true` means this column will be sortable.
+    - `seq`: `number` - Means priority order.
+
+    - `dir`: `string` - The allowed values are `asc` or `desc`.
+
+  - `form`: [RWD Options](#rwd-options)<br>
+  When layout panel is `LayoutOpts.Form` or in Kekkai Popup Modal, the column width is set by this option.  Default is `{ def: 12 }`.
+
+  - `card`: [RWD Options](#rwd-options)<br>
+  When layout panel is `LayoutOpts.Card`, the column width is set by this option.  Default is `{ def: 12 }`.
+
+  - `list`: `number`<br>
+  When layout panel is `LayoutOpts.List`, the column width is set by this option.  The number means `px`, and default is `120`.
+
+  - `locked`: `boolean`<br>
+  Only for `LayoutOpts.List`.  Set column as locked, default is `false`.
+
+  - `lockable`: `boolean`<br>
+  Only for `LayoutOpts.List`.  Set column could be switched locked status by user, default is `false`.
+
+  - `hidden`: `boolean`<br>
+  Only for `LayoutOpts.List`.  Set column as hidden, default is `false`.
+
+  - `hideable`: `boolean`<br>
+  Only for `LayoutOpts.List`.  Set column could be switched hidden by user, default is `false`.
+
+  - `resizable`: `boolean`<br>
+  Only for `LayoutOpts.List`.  Set column could be resized, default is `false`.
+
+  - `filter`: `any`<br>
+  Only for `LayoutOpts.List`.  Kekkai will build a filter feature on the header which is like Excel.  This option could define filter condition, such as `'eq'` / `'like'`.  See your request parameter format to decide it.
 
 #### `<KekkaiDisplay />`
 - ##### Options(props)

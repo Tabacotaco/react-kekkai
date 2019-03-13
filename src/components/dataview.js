@@ -109,7 +109,7 @@ export default class KekkaiDataview extends Component {
   [Symbols.onSelected] = (checked) => {
     const { dataModel, onSelected = () => { } } = this.props;
 
-    dataModel.$setChecked(checked, () => onSelected(dataModel.$checked));
+    dataModel.$setChecked(checked, () => onSelected(dataModel.$checked, dataModel));
   };
 
 
