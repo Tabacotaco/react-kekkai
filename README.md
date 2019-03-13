@@ -11,18 +11,18 @@ Kekkai provided 5 components to build the common data layout(such as Form / Grid
 
 The pattern about using 5 components is...
 ```
-<![#17a2b8](KekkaiContainer) panel={LayoutOpts.List} view={data => (
-  <![#17a2b8](KekkaiDataview) key={data.$uid} dataModel={data}>
-    <![#17a2b8](KekkaiField) label="Name" name="fullName">
-      <![#17a2b8](KekkaiDisplay)># {data.fullName}</KekkaiDisplay>
+<KekkaiContainer panel={LayoutOpts.List} view={data => (
+  <KekkaiDataview key={data.$uid} dataModel={data}>
+    <KekkaiField label="Name" name="fullName">
+      <KekkaiDisplay># {data.fullName}</KekkaiDisplay>
 
-      <![#17a2b8](KekkaiEditor) required={true} validation={value =>
+      <KekkaiEditor required={true} validation={value =>
         value.trim().length === 0 ? 'Name is required.' : true
       }>
         <input type="text" />
-      </![#17a2b8](KekkaiEditor)>
-    </![#17a2b8](KekkaiField)>
-  </![#17a2b8](KekkaiDataview)>
+      </KekkaiEditor>
+    </KekkaiField>
+  </KekkaiDataview>
 )}/>
 ```
 In Japanese, 'Kekkai' means magic circle, and the pattern just looks like a magic circle, so I named it as 'Kekkai' ^^.
@@ -64,7 +64,7 @@ import 'react-kekkai/dist/index.css';
 
 ## 5 Components
 Using this pattern concept to accomplish building the different layout via the only one way.  It will reduce our work for HTML, and make sure all the layout could follow the same business rule.  Now, let's check the purposes of these 5 components:
-- `<KekkaiContainer />` ([API](#kekkai-container))<br>
+- ![#17a2b8](`<KekkaiContainer />`) ([API](#kekkai-container))<br>
   1 `<KekkaiContainer />` means 1 data source, all the data will work under the container.  `<KekkaiContainer />` is responsible for privding a basic Toolbar / Pagination, and allocating HTML Layout Panel.
 - `<KekkaiDataview />` ([API](#kekkai-dataview))<br>
   1 <KekkaiDataview /> means 1 data, so there will be many `<KekkaiDataview />` in 1 `<KekkaiContainer />`.  We use `<KekkaiDataview />` to pack the data columns(field), and it provided Data-Row Selection / Menu.
