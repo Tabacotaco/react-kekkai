@@ -67,19 +67,19 @@ import 'react-kekkai/dist/index.css';
 
 ## 5 Components
 Using this pattern concept to accomplish building the different layout via the only one way.  It will reduce our work for HTML, and make sure all the layout could follow the same business rule.  Now, let's check the purposes of these 5 components:
-- `<KekkaiContainer />` ([API](#KekkaiContainer))<br>
+- `<KekkaiContainer />` ([API](#KekkaiContainer-))<br>
   1 `<KekkaiContainer />` means 1 data source, all the data will work under the container.  `<KekkaiContainer />` is responsible for privding a basic Toolbar / Pagination, and allocating HTML Layout Panel.
 
-- `<KekkaiDataview />` ([API](#KekkaiDataview))<br>
+- `<KekkaiDataview />` ([API](#KekkaiDataview-))<br>
   1 <KekkaiDataview /> means 1 data, so there will be many `<KekkaiDataview />` in 1 `<KekkaiContainer />`.  We use `<KekkaiDataview />` to pack the data columns(field), and it provided Data-Row Selection / Menu.
 
-- `<KekkaiField />` ([API](#KekkaiField))<br>
+- `<KekkaiField />` ([API](#KekkaiField-))<br>
   `<KekkaiField />` is used to pack Display and Editor, and responsible for switching them by data status on the right time.  So, we don't need to use any skill to make up the switching control.  It could also define the column layout under the different panel.
 
-- `<KekkaiDisplay />` ([API](#KekkaiDisplay))<br>
+- `<KekkaiDisplay />` ([API](#KekkaiDisplay-))<br>
   `<KekkaiField />` has provided a default `<KekkaiDisplay />` to show value.  If you wanna use different ways or format to show the value, you could override it by your own.  This is responsibility of `<KekkaiDisplay />`.
 
-- `<KekkaiEditor />` ([API](#KekkaiEditor))<br>
+- `<KekkaiEditor />` ([API](#KekkaiEditor-))<br>
   When data need to be edited, we could use `<KekkaiEditor />` to pack the form items.  We could also bind the events to append rule to control editable status / handle data changed / do validation and tip, and make every form item be unified into one solution by these 3 events.  By the way, the form item which is packed by `<KekkaiEditor />` must have supported properties of 'value' and 'onChange'.
 
 ## API
@@ -115,7 +115,7 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
 
       - `filters`: `[{ name, operator, value }]` -
         - `name`: `string` - means the field name of data.
-        - `operator`: `string` - means condition, and it's defined by [`<KekkaiField />`](#KekkaiField)'s property: `filter`.
+        - `operator`: `string` - means condition, and it's defined by [`<KekkaiField />`](#KekkaiField-)'s property: `filter`.
         - `value`: `any` - This is input by user filtering.
 
       - `page`: `{ page, pageSize, skip, start }` -
@@ -128,12 +128,12 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
       - `data`: `Object[]` - When you get the data JSON array from response with await, please put the data JSON into this property.
 
       - `total`: `number` - Set the total count of data to make pagination work.
-  - *`view`: (`data`) => [`<KekkaiDataview />`](#KekkaiDataview)<br>
-  This event will be fired when Kekkai get the response data and convert JSON to [KekkaiModel](#KekkaiModel).  [KekkaiModel](#KekkaiModel) will be inputted in this event, so we could build [`<KekkaiDataview />`](#KekkaiDataview) by it.
+  - *`view`: (`data`) => [`<KekkaiDataview />`](#KekkaiDataview-)<br>
+  This event will be fired when Kekkai get the response data and convert JSON to [KekkaiModel](#KekkaiModel).  KekkaiModel will be inputted in this event, so we could build [`<KekkaiDataview />`](#KekkaiDataview-) by it.
     - Parameters
       - `data`: [KekkaiModel](#KekkaiModel) - The converted data from response.
 
-    - Return: [`<KekkaiDataview />`](#KekkaiDataview)<br>
+    - Return: [`<KekkaiDataview />`](#KekkaiDataview-)<br>
       Defined layout of data.
 
   - `onCommit`: `async (todoRef, { target, modifieds, removes }) => { success, msg }`<br>
@@ -216,7 +216,31 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
 
 #### `<KekkaiDataview />`
 - ##### Options(props)
+  - *`key`: `string`<br>
+  In React, the element array must be set a key, so our suggest is setting as [KekkaiModel](#KekkaiModel).$uid.
+
+  - *`dataModel`: [KekkaiModel](#KekkaiModel)<br>
+  Binding data to this `<KekkaiDataview />` to make sure it could work.
+
+  - `selectable`: `boolean` | `(data) => boolean`<br>
+  This option will be actived when the panel is `LayoutOpts.List` or `LayoutOpts.Card`.  To define this `<KekkaiDataview />` could be selected by user, and default is false.  You could also set as a function to build business rules.
+    - Parameters
+      - `data`: [KekkaiModel](#KekkaiModel) - Kekkai will put the data into this function.
+
+  - `reorderable`: `boolean`<br>
+  This option will be actived when the panel is `LayoutOpts.List`.  To define all the columns in `<KekkaiDataview />` could be reorder by drag and drop.
+
+  - `labelSize`: `number`<br>
+  This option will be actived when the panel is `LayoutOpts.Form`.  To define all the `<label />`'s width, and the allowed values are between 1 ~ 12.
+
+  - `viewSize`: [RWD Options](#rwd-options)<br>
+  This option will be actived when the panel is `LayoutOpts.Card`.  To define `<KekkaiDataview />`'s width, and default is `{ def: 12 }`.
+
 - ##### Events
+  - `onSelected`: `(isChecked) => void`<br>
+  This event will be fired when user select the data by Data-Row Selection.
+  
+
 - ##### Methods
 
 #### `<KekkaiField />`
@@ -241,6 +265,8 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
 
 #### EditingModeOpts
 
+#### RWD Options
+
 ### Types API
 #### KekkaiModel
 
@@ -248,6 +274,6 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
 
 #### Todo
 
-#### TodoScript
+#### TodoScripts
 
 by Taco (tabacotaco@gmail.com)
