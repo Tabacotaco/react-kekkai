@@ -111,7 +111,7 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
     - Parameters
       - `sort`: `[{ name, dir }]` - 
         - `name`: `string` - means the field name of data.
-        - `dir`: `string` - will be `asc` or `desc`.
+        - `dir`: `string` - It will only be `asc` or `desc`.
 
       - `filters`: `[{ name, operator, value }]` -
         - `name`: `string` - means the field name of data.
