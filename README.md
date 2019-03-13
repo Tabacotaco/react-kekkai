@@ -77,11 +77,13 @@ Using this pattern concept to accomplish building the different layout via the o
 
 ## API
 After the introduction of Kekkai, let's see the API to know how to use Kekkai.
-  ## Container
-  <KekkaiContainer />
-  ## Dataview
-  <KekkaiDataview />
-  ## Field
-  <KekkaiField />
+  ### Container
+  `<KekkaiContainer />`
+
+  ### Dataview
+  `<KekkaiDataview />`
+
+  ### Field
+  `<KekkaiField />`
 
 by Taco (tabacotaco@gmail.com)
