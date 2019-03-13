@@ -11,18 +11,18 @@ Kekkai provided 5 components to build the common data layout(such as Form / Grid
 
 The pattern about using 5 components is...
 ```
-<KekkaiContainer panel={LayoutOpts.List} view={data => (
-  <KekkaiDataview key={data.$uid} dataModel={data}>
-    <KekkaiField label="Name" name="fullName">
-      <KekkaiDisplay># {data.fullName}</KekkaiDisplay>
+<![#17a2b8](KekkaiContainer) panel={LayoutOpts.List} view={data => (
+  <![#17a2b8](KekkaiDataview) key={data.$uid} dataModel={data}>
+    <![#17a2b8](KekkaiField) label="Name" name="fullName">
+      <![#17a2b8](KekkaiDisplay)># {data.fullName}</KekkaiDisplay>
 
-      <KekkaiEditor required={true} validation={value =>
+      <![#17a2b8](KekkaiEditor) required={true} validation={value =>
         value.trim().length === 0 ? 'Name is required.' : true
       }>
         <input type="text" />
-      </KekkaiEditor>
-    </KekkaiField>
-  </KekkaiDataview>
+      </![#17a2b8](KekkaiEditor)>
+    </![#17a2b8](KekkaiField)>
+  </![#17a2b8](KekkaiDataview)>
 )}/>
 ```
 In Japanese, 'Kekkai' means magic circle, and the pattern just looks like a magic circle, so I named it as 'Kekkai' ^^.
