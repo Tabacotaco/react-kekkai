@@ -82,14 +82,14 @@ Using this pattern concept to accomplish building the different layout via the o
 After the introduction of Kekkai, let's see the API to know how to use Kekkai.  (PS. '*' means required.)
 ### Components API
 #### `<KekkaiContainer />`
-- Options(props)
+- ##### Options(props)
   - *`ref`: `string` - Define a ref, we could call the methods through ref.
   - `panel`: [LayoutOpts](#LayoutOpts) - Specify the HTML layout, default is `LayoutOpts.List`.
   - `toolBgColor`: `string` - Define background-color of tool, default is `#007bff`.
   - `toolTxColor`: `string` - Define text-color of tool, default is `white`.
   - `pageSize`: `number` - Define data count in 1 page, and the allowed number is `10` / `25` / `50` / `100(means show all by infinite-scroll)`, default is `10`.
   - `todos`: ([Todo](#Todo) | [TodoScripts](#TodoScripts))[] - Inject the data manipulations which are defined by yourself or Kekkai provided.  If there is not any `todos`, users could only read the data in <KekkaiContainer />.
-- Events
+- ##### Events
   - *`getSearchResponse`: async ({ `sort`, `filters`, `page`}) => { `data`, `total` } - This is the most important event, all the data that <KekkaiContainer /> needs are returned by it.  You can also make up parameters of request and send request here. Check more as follows:
     - Parameters
       - `sort`: `[{ name, dir }]` - 
@@ -125,27 +125,28 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
     - Return: `{ success, msg }`
       - `success`: `boolean` - The response result, set as `false` will make Kekkai popup a Error Message Box, and the content is `msg`.
       - `msg`: `string` - Error message.
-- Methods
+- ##### Methods
+  - 
 
 #### `<KekkaiDataview />`
-- Options(props)
-- Events
-- Methods
+- ##### Options(props)
+- ##### Events
+- ##### Methods
 
 #### `<KekkaiField />`
-- Options(props)
-- Events
-- Methods
+- ##### Options(props)
+- ##### Events
+- ##### Methods
 
 #### `<KekkaiDisplay />`
-- Options(props)
-- Events
-- Methods
+- ##### Options(props)
+- ##### Events
+- ##### Methods
 
 #### `<KekkaiEditor />`
-- Options(props)
-- Events
-- Methods
+- ##### Options(props)
+- ##### Events
+- ##### Methods
 
 ### Options API
 
