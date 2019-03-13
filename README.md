@@ -1,7 +1,7 @@
 # react-kekkai
 It's a component library for React, and named 'Kekkai'(Japanese). Let's see Kekkai via the agenda as follows:
 - [What is Kekkai?](#what-is-kekkai)
-- [Abount Install](#abount-install)
+- [About Install](#about-install)
 - [Import Kekkai](#import-kekkai)
 - [5 Components](#5-components)
 - [API](#api)
@@ -30,7 +30,7 @@ The pattern about using 5 components is...
 ```
 In Japanese, 'Kekkai' means magic circle, and the pattern just looks like a magic circle, so I named it as 'Kekkai' ^^.
 
-## Abount Install
+## About Install
 - 1. Download from NPM<br>
   `npm i react moment numeral react-kekkai -s`
 - 2. Update your webpack.config.js<br>
