@@ -71,7 +71,7 @@ Using this pattern concept to accomplish building the different layout via the o
   1 `<KekkaiContainer />` means 1 data source, all the data will work under the container.  `<KekkaiContainer />` is responsible for privding a basic Toolbar / Pagination, and allocating HTML Layout Panel.
 
 - `<KekkaiDataview />` ([API](#KekkaiDataview-))<br>
-  1 <KekkaiDataview /> means 1 data, so there will be many `<KekkaiDataview />` in 1 `<KekkaiContainer />`.  We use `<KekkaiDataview />` to pack the data columns(field), and it provided Data-Row Selection / Menu.
+  1 `<KekkaiDataview />` means 1 data, so there will be many `<KekkaiDataview />` in 1 `<KekkaiContainer />`.  We use `<KekkaiDataview />` to pack the data columns(field), and it provided Data-Row Selection / Menu.
 
 - `<KekkaiField />` ([API](#KekkaiField-))<br>
   `<KekkaiField />` is used to pack Display and Editor, and responsible for switching them by data status on the right time.  So, we don't need to use any skill to make up the switching control.  It could also define the column layout under the different panel.
