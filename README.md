@@ -173,43 +173,47 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
 - **Methods**
   - **`setAlert(content, { type, title, icon, callbackFn }): void`**<br>
   To show a message tip.
-    - ***`content`**: `string` | `React Element` - The message content.
+    - **Parameters**
+      - ***`content`**: `string` | `React Element` - The message content.
 
-    - **`type`**: `string` - Define the background-color of message box, and the allowed values are `info` / `success` / `warning` / `danger`.  Default is `info`.
+      - **`type`**: `string` - Define the background-color of message box, and the allowed values are `info` / `success` / `warning` / `danger`.  Default is `info`.
 
-    - **`title`**: `string` - The message title.
+      - **`title`**: `string` - The message title.
 
-    - **`icon`**: `string` - Set as a icon class name, such as [Font-Awesome](https://fontawesome.com/v4.7.0/icons/).  By the way, Kekkai use Font Awesome 4.7 as default icon.
+      - **`icon`**: `string` - Set as a icon class name, such as [Font-Awesome](https://fontawesome.com/v4.7.0/icons/).  By the way, Kekkai use Font Awesome 4.7 as default icon.
 
-    - **`callbackFn`**: `() => void` - This function will be called after the message box closed.
+      - **`callbackFn`**: `() => void` - This function will be called after the message box closed.
 
   - **`setConfirm(content, { type, title, icon, callbackFn }): void`**<br>
   To show a confirmed message.
-    - ***`content`**: `string` | `React Element` - The message content.
+    - **Parameters**
+      - ***`content`**: `string` | `React Element` - The message content.
 
-    - **`type`**: `string` - Define the background-color of message box, and the allowed values are `info` / `success` / `warning` / `danger`.  Default is `info`.
+      - **`type`**: `string` - Define the background-color of message box, and the allowed values are `info` / `success` / `warning` / `danger`.  Default is `info`.
 
-    - **`title`**: `string` - The message title.
+      - **`title`**: `string` - The message title.
 
-    - **`icon`**: `string` - Set as a icon class name, such as [Font-Awesome](https://fontawesome.com/v4.7.0/icons/).  By the way, Kekkai use Font Awesome 4.7 as default icon.
+      - **`icon`**: `string` - Set as a icon class name, such as [Font-Awesome](https://fontawesome.com/v4.7.0/icons/).  By the way, Kekkai use Font Awesome 4.7 as default icon.
 
-    - ***`callbackFn`**: `(isConfirmed: boolean) => void` - This function will be called after the message box closed.
+      - ***`callbackFn`**: `(isConfirmed: boolean) => void` - This function will be called after the message box closed.
 
   - **`add(newData, { index }): void`**<br>
   Append new JSON data to `<KekkaiContainer />`, and you could also specify the **index** of data(default is 0).
 
   - **`edit(turnOn, { editData }): void`**<br>
   Turn on/off the editable status of data.  If you haven't specified the target data, the default targets are all data.
-    - ***`turnOn`**: `boolean` - Set as `true` to turn on editable, and `false` to turn off.
+    - **Parameters**
+      - ***`turnOn`**: `boolean` - Set as `true` to turn on editable, and `false` to turn off.
 
-    - **`editData`**: [KekkaiModel](#KekkaiModel) | [KekkaiModel](#KekkaiModel)[] - Specify one or more target data.
+      - **`editData`**: [KekkaiModel](#KekkaiModel) | [KekkaiModel](#KekkaiModel)[] - Specify one or more target data.
 
   - **`async doSearch(filters, specifyPage): void`**<br>
   To load data.  **Event - getSearchResponse** will be fired when called this method.
 
   - **`async doRollback(showConfirm): void`**<br>
   To rollback all the modifieds of data, and you could also rollback without confirm message box.
-    - **`showConfirm`**: `boolean` - Default is `true`, and setting as `false` could ignore confirming.
+    - **Parameters**
+      - **`showConfirm`**: `boolean` - Default is `true`, and setting as `false` could ignore confirming.
   
   - **`async doCommit(): void`**<br>
   To commit all the modifieds of data.  Kekkai will make up the target process data according to manipulation situational from user, and put `todoRef` and data into **Event - onCommit**.
@@ -336,7 +340,7 @@ There isn't not any options for this component.  It's just used to pack the valu
 This option will be used in [`<KekkaiContainer />`](##kekkaicontainer-).  There are 3 kinds layout, see as follows:
 - **Card**: `LayoutOpts.Card`<br>
 Card layout is built by `Layout-Grid` & `Components-Card` from Bootstrap 4.0.  We could use it to show multiple data, and it's RWD design.  Under this panel, there isn't any Data-Row Selection, all the manipulations about Selection and Row Double Click will become to be triggered by Data-Row Menu.<br><br>
-PS. I wanna append data sort feature on the label in the future.
+**PS. I wanna append data sort feature on the label in the future.**
 
 - **Form**: `LayoutOpts.Form`<br>
 Form layout is built by `Layout-Grid` from Bootstrap 4.0, and it's also RWD design.  In Kekkai, if set `panel` as `LayoutOpts.Form`, the `pageSize` will become to `1`.  Yes, it means show only one data in Kekkai, so all the manipulations about data could only be triggered by Toolbar.  By the way, when Kekkai wanna generate a popup modal of single data, the content layout in modal are form the options of form.
@@ -369,20 +373,121 @@ Means editing by popup modal, and it's for single case.
 #### RWD Options
 This option is base on Bootstrap 4.0, and it was designed from the default 5 sizes from Boostrap.
 - **Default type is `{ def, sm, md, lg, xl }`**
-  - **`def`**: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.  Default is `12`.
+  - **`def`**: `false` | `number`<br>
+  Allowed numbers are between 1 ~ 12, and `false` means hidden.  Default is `12`.
 
-  - **`sm`**: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.
+  - **`sm`**: `false` | `number`<br>
+  Allowed numbers are between 1 ~ 12, and `false` means hidden.
 
-  - **`md`**: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.
+  - **`md`**: `false` | `number`<br>
+  Allowed numbers are between 1 ~ 12, and `false` means hidden.
 
-  - **`lg`**: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.
+  - **`lg`**: `false` | `number`<br>
+  Allowed numbers are between 1 ~ 12, and `false` means hidden.
 
-  - **`xl`**: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.
+  - **`xl`**: `false` | `number`<br>
+  Allowed numbers are between 1 ~ 12, and `false` means hidden.
 
 ### Base Types
 #### KekkaiModel
+This type is built in `<KekkaiContainer />` when it get the data JSON array, so we don't need to construct it by ourself.
+- **Readonly Properties**
+  - **$uid**: `string`<br>
+  Get the unique key of data.
+
+  - **$json**: `Object`<br>
+  Get the values JSON from data.
+
+  - **$isNew**: `boolean`<br>
+  Check data is the new created.
+
+  - **$isValid**: `boolean`<br>
+  Check data is valid.
+
+  - **$editable**: `boolean`<br>
+  To know data is editing or not.
+
+  - **$checked**: `boolean`<br>
+  To know data is selected or not.
+
+  - **$hidden**: `boolean`<br>
+  To know data is hidden or not.
+
+  - **$isDirty**: `boolean`<br>
+  To know data is modified or not.
+
+- **Methods**
+  - **`$setHidden(hidden): boolean`**<br>
+  Set data as hidden on the view.
+    - **Parameters**
+      - **`hidden`**: `boolean` - `true` means hidden, and `false` means visible.  Default is `false`.
+
+    - **Return: `boolean`**<br>
+    Get the last hidden result.
+
+  - **`$setEditable(turnOn): boolean`**<br>
+  Set data as editing.
+    - **Parameters**
+      - **`turnOn`**: `boolean` - `true` means show `<KekkaiEditor />`, and `false` means display.  Default is `false`.
+
+    - **Return: `boolean`**<br>
+    Get the last editable result.
+
+  - **`$setChecked(checked): boolean`**<br>
+  Set data as selected.
+    - **Parameters**
+      - **`checked`**: `boolean` - `true` means selected, and `false` means deselected.  Default is `false`.
+
+    - **Return: `boolean`**<br>
+    Get the last selected result.
+
+  - **`$getValid(name): boolean | string`**<br>
+  Get the specify field's validation result.
+    - **Parameters**
+      - **`name`**: `string` - Target field name.
+
+    - **Return: `boolean` | `string`**<br>
+    `true` means data is valid, and `string` is the error message.
+
+  - **`$undo(): void`**<br>
+  Remove all the modifieds to restore data to initially, but couldn't remove new created data.
 
 #### KekkaiPager
+This type is built in `<KekkaiContainer />`, so we never and ever need to construct it by ourself.  We could get this pager from `<KekkaiContainer />`.pager, and then override its options.
+- **Readonly Properties**
+  - **`pageSize`** - `number`<br>
+  Get data count of one page, and this property is allowed to set value.  If you wanna change pageSize, you could use like this: `pager.pageSize = 25;`.
+
+  - **`skip`** - `number`<br>
+  Get how many data is skipped.
+
+  - **`start`** - `number`<br>
+  Get the start data index in current page.
+
+  - **`end`** - `number`<br>
+  Get the end data index in current page.
+
+  - **`total`** - `number`<br>
+  Get the total data count from current searching.
+
+  - **`page`** - `number`<br>
+  Get current page index, and this property is allowed to set value.  If you wanna change it, you could use like this: `pager.page = 3;`.
+
+  - **`maxPage`** - `number`<br>
+  Get the last page index.
+
+- **Methods**
+  - **`toNext(): void`**<br>
+  Go to next page.
+  
+  - **`toPrev(): void`**<br>
+  Go to previous page.
+  
+  - **`toFirst(): void`**<br>
+  Go to the first page.
+  
+  - **`toLast(): void`**<br>
+  Go to the last page.
 
 #### Todo
 
