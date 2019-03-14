@@ -85,7 +85,7 @@ Using this pattern concept to accomplish building the different layout via the o
 ## API Documentation
 After the introduction of Kekkai, let's see the API to know how to use Kekkai.  (PS. '*' means required.)
 ### Components
-**`<KekkaiContainer />`**
+#### `<KekkaiContainer />`
 - **Options(props)**
   - ***`ref`**: `string`<br>
   Define a ref, we could call the methods through ref.
@@ -158,17 +158,23 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
       - **`msg`**: `string` - Error message.
 
 - **Readonly Properties**
-  - **`panel`**: [LayoutOpts](#LayoutOpts) - Get current layout type.
+  - **`panel`**: [LayoutOpts](#LayoutOpts)<br>
+  Get current layout type.
 
-  - **`pager`**: [KekkaiPager](#KekkaiPager) - Get pagination manager.  If you wanna change page size or index, you could use this property.
+  - **`pager`**: [KekkaiPager](#KekkaiPager)<br>
+  Get pagination manager.  If you wanna change page size or index, you could use this property.
 
-  - **`data`**: [KekkaiModel](#KekkaiModel)[] - Get all data in current page.
+  - **`data`**: [KekkaiModel](#KekkaiModel)[]<br>
+  Get all data in current page.
 
-  - **`selecteds`**: [KekkaiModel](#KekkaiModel)[] - Get the selected data in current page.
+  - **`selecteds`**: [KekkaiModel](#KekkaiModel)[]<br>
+  Get the selected data in current page.
 
-  - **`editings`**: [KekkaiModel](#KekkaiModel)[] - Get the editable data in current page.
+  - **`editings`**: [KekkaiModel](#KekkaiModel)[]<br>
+  Get the editable data in current page.
 
-  - **`modifieds`**: [KekkaiModel](#KekkaiModel)[] -  Get the dirty data in current page.
+  - **`modifieds`**: [KekkaiModel](#KekkaiModel)[]<br>
+  Get the dirty data in current page.
 
 - **Methods**
   - **`setAlert(content, { type, title, icon, callbackFn }): void`**<br>
@@ -206,6 +212,15 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
       - ***`turnOn`**: `boolean` - Set as `true` to turn on editable, and `false` to turn off.
 
       - **`editData`**: [KekkaiModel](#KekkaiModel) | [KekkaiModel](#KekkaiModel)[] - Specify one or more target data.
+
+  - **`setExecuting({ todo, data, popup }): void`**<br>
+  If there is a executing [`Todo`](#todo) which has to storage temporarily, call this method.  The `Todo` in temporary storage will be the top priority when you call `doCommit`.
+    - **Parameters**
+      - **`todo`**: [`Todo`](#todo) - Target temporary storage `Todo`.
+
+      - **`data`**: [KekkaiModel](#KekkaiModel) - Target processed data, only support single data.
+
+      - **`popup`**: `boolean` - If `todo`'s `editingMode` is set as `EditingOpts.POPUP`, please set this option as `true` to let `<KekkaiContainer />` know it has to popup a editing modal.
 
   - **`async doSearch(filters, specifyPage): void`**<br>
   To load data.  **Event - getSearchResponse** will be fired when called this method.
@@ -339,17 +354,17 @@ There isn't not any options for this component.  It's just used to pack the valu
 #### LayoutOpts
 This option will be used in [`<KekkaiContainer />`](##kekkaicontainer-).  There are 3 kinds layout, see as follows:
 - **Card**: `LayoutOpts.Card`<br>
-Card layout is built by `Layout-Grid` & `Components-Card` from Bootstrap 4.0.  We could use it to show multiple data, and it's RWD design.  Under this panel, there isn't any Data-Row Selection, all the manipulations about Selection and Row Double Click will become to be triggered by Data-Row Menu.<br><br>
+Card layout is built by `Layout-Grid` & `Components-Card` from Bootstrap 4.0.  We could use it to show multiple data, and it's RWD design.  Under this panel, there isn't any Data-Row Selection, all the manipulations about Selection and Row Double Click will become to be trigger by Data-Row Menu.<br><br>
 **PS. I wanna append data sort feature on the label in the future.**
 
 - **Form**: `LayoutOpts.Form`<br>
-Form layout is built by `Layout-Grid` from Bootstrap 4.0, and it's also RWD design.  In Kekkai, if set `panel` as `LayoutOpts.Form`, the `pageSize` will become to `1`.  Yes, it means show only one data in Kekkai, so all the manipulations about data could only be triggered by Toolbar.  By the way, when Kekkai wanna generate a popup modal of single data, the content layout in modal are form the options of form.
+Form layout is built by `Layout-Grid` from Bootstrap 4.0, and it's also RWD design.  In Kekkai, if set `panel` as `LayoutOpts.Form`, the `pageSize` will become to `1`.  Yes, it means show only one data in Kekkai, so all the manipulations about data could only be trigger by Toolbar.  By the way, when Kekkai wanna generate a popup modal of single data, the content layout in modal are form the options of form.
 
 - **List**: `LayoutOpts.List`<br>
 Show data by list.  List layout has 2 blocks: one is locked on the left, and one is scrollable on the right.  Under this panel, user could adjust the columns layout, such as width / hidden / order / locked / data sort, and also could use data filter feature on the header.  It distributes the manipulations into 4 kinds: Toolbar / Selection / Row Menu / Row Double Click.
 
 #### TriggerOpts
-This option will be bound in [Todo](#Todo) or [TodoScripts](#TodoScripts).  Kekkai distributes the manipulations about data into 4 kinds, and all the triggered ways are different. As follows:
+This option will be bound in [Todo](#Todo) or [TodoScripts](#TodoScripts).  Kekkai distributes the manipulations about data into 4 kinds, and all the trigger ways are different. As follows:
 - **TOOLBAR**: `TriggerOpts.TOOLBAR`<br>
 It means a initially state.  It will be default shown on the Toolbar, but if user selects any data, the toolbar buttons will be hidden(become to Selection-Mode).
 
@@ -392,28 +407,33 @@ This option is base on Bootstrap 4.0, and it was designed from the default 5 siz
 #### KekkaiModel
 This type is built in `<KekkaiContainer />` when it get the data JSON array, so we don't need to construct it by ourself.
 - **Readonly Properties**
-  - **$uid**: `string`<br>
+  - **`[data field name]`**: `any`<br>
+  If you wanna get / set the field value, you could use like as follows.
+    - getter: `console.log(data.fullName);`
+    - setter: `data.fullName = 'Tom';`
+
+  - **`$uid`**: `string`<br>
   Get the unique key of data.
 
-  - **$json**: `Object`<br>
+  - **`$json`**: `Object`<br>
   Get the values JSON from data.
 
-  - **$isNew**: `boolean`<br>
+  - **`$isNew`**: `boolean`<br>
   Check data is the new created.
 
-  - **$isValid**: `boolean`<br>
+  - **`$isValid`**: `boolean`<br>
   Check data is valid.
 
-  - **$editable**: `boolean`<br>
+  - **`$editable`**: `boolean`<br>
   To know data is editing or not.
 
-  - **$checked**: `boolean`<br>
+  - **`$checked`**: `boolean`<br>
   To know data is selected or not.
 
-  - **$hidden**: `boolean`<br>
+  - **`$hidden`**: `boolean`<br>
   To know data is hidden or not.
 
-  - **$isDirty**: `boolean`<br>
+  - **`$isDirty`**: `boolean`<br>
   To know data is modified or not.
 
 - **Methods**
@@ -490,7 +510,103 @@ This type is built in `<KekkaiContainer />`, so we never and ever need to constr
   Go to the last page.
 
 #### Todo
+Kekkai provided this type to let us build data manipulations more quickly.  Though constructing `Todo`, we don't need to put `<button />` on HTML, and also think how to accomplish the control rules.  All the controls are packed in Kekkai, we just set options and inject checking/executing function at most.  Let's see how to build the `Todo`:
+```
+new Todo({
+  ref: string,
+  concat: string,
+  text: string,
+  icon: string,
+  trigger: TriggerOpts,
+  editingMode: EditingOpts,
+  executable: () => boolean,
+  execute: () => void,
+  onSuccess: () => void,
+  confirmMsg: { type: string, icon: string, title: string, content: string },
+  responseMsg: { type: string, icon: string, title: string, content: string }
+})
+```
+- **Constructor Parameters**
+  - ***`ref`**: `string`<br>
+  Give the `Todo` a reference key.  This key wouldn't be unique, it's just used to decide the committed data how to process in [`<KekkaiContainer />`](#kekkaicontainer-)'s **Event - onCommit**.
+
+  - **`concat`**: `string`<br>
+  If there are the same 2 concats `Todo` in one `<KekkaiContainer />`, Kekkai will help us to build them as a dropdown menu in Toolbar.
+
+  - ***`text`**: `string`<br>
+  Give the `Todo` a display name.
+
+  - **`icon`**: `string`<br>
+  Set as a icon class name, such as [Font-Awesome](https://fontawesome.com/v4.7.0/icons/).  By the way, Kekkai use Font Awesome 4.7 as default icon.
+
+  - ***`trigger`**: [TriggerOpts](#triggeropts)<br>
+  Kekkai will generate a trigger way via this option, see [TriggerOpts](#triggeropts).
+
+  - **`editingMode`**: [EditingOpts](#editingopts)<br>
+  See [EditingOpts](#EditingOpts) and [`<KekkaiContainer />`](#KekkaiContainer)'s **Method - setExecuting**.
+
+  - **`executable`**: `({ data, list }, container) => boolean`<br>
+  Inject a function which will return `boolean`, and Kekkai will check this `Todo` is able to execute on the right time.
+    - **Parameters**
+      - **`data`**: [KekkaiModel](#KekkaiModel) - Single target data, this parameter will be actived when `trigger` is set as `TriggerOpts.ROW_MENU` or `TriggerOpts.ROW_DBCLICK`.
+
+      - **`list`**: [KekkaiModel](#KekkaiModel)[] - Multiple target data, this parameter will be actived when `trigger` is set as `TriggerOpts.TOOLBAR` or `TriggerOpts.SELECTION`.
+
+      - **`container`**: [`<KekkaiContainer />`](#KekkaiContainer) - Owner `<KekkaiContainer />`.
+
+    - **Return: `boolean`**<br>
+    Return a `boolean` value to tell Kekkai this `Todo` could be executed.
+
+  - ***`execute`**: `({ data, list }, container) => void`<br>
+  Inject a function to define this `Todo` need to do what.
+    - **Parameters**
+      - **`data`**: [KekkaiModel](#KekkaiModel) - Single target data, this parameter will be actived when `trigger` is set as `TriggerOpts.ROW_MENU` or `TriggerOpts.ROW_DBCLICK`.
+
+      - **`list`**: [KekkaiModel](#KekkaiModel)[] - Multiple target data, this parameter will be actived when `trigger` is set as `TriggerOpts.TOOLBAR` or `TriggerOpts.SELECTION`.
+
+      - **`container`**: [`<KekkaiContainer />`](#KekkaiContainer) - Owner `<KekkaiContainer />`.
+
+  - **`onSuccess`**: `({ success, msg }, container) => void`<br>
+  This option is actived when `Todo` is a request case, and it will be used in `<KekkaiContainer />`'s **Method - doCommit**.  For make sure this option could work, don't forget to call `<KekkaiContainer />`'s **Method - setExecuting** in `execute`.
+    - **Parameters**
+      - **`success`**: `boolean` - It means the result of request, and it's from the return value in `<KekkaiContainer />`'s **Method - doCommit**.  Set it as `false` and give a `msg` in `doCommit`, Kekkai will popup a message tip.  `true` means request is fine.
+
+      - **`msg`**: `string` - This message is from the return value in `<KekkaiContainer />`'s **Method - doCommit**.
+
+      - **`container`**: [`<KekkaiContainer />`](#KekkaiContainer) - Owner `<KekkaiContainer />`.
+
+  - **`confirmMsg`**: `{ type, icon, title, content }`<br>
+  This option will effect Kekkai should popup a confirmed message or not before executing.
+    - **Parameters**
+      - **`type`**: `string` - Define the background-color of message box, and the allowed values are `info` / `success` / `warning` / `danger`.  Default is `info`.
+
+      - **`icon`**: `string` - Set as a icon class name, such as [Font-Awesome](https://fontawesome.com/v4.7.0/icons/).  By the way, Kekkai use Font Awesome 4.7 as default icon.
+
+      - **`title`**: `string` - The message title.
+
+      - ***`content`**: `string` | `React Element` - The message content.
+
+  - **`responseMsg`**: `{ type, icon, title, content }`<br>
+  This option will effect Kekkai should popup a message tip after `onSuccess`, and this option is actived when request result is successfully.
+    - **Parameters**
+      - **`type`**: `string` - Define the background-color of message box, and the allowed values are `info` / `success` / `warning` / `danger`.  Default is `info`.
+
+      - **`icon`**: `string` - Set as a icon class name, such as [Font-Awesome](https://fontawesome.com/v4.7.0/icons/).  By the way, Kekkai use Font Awesome 4.7 as default icon.
+
+      - **`title`**: `string` - The message title.
+
+      - ***`content`**: `string` | `React Element` - The message content.
 
 #### TodoScripts
+Finally, even we could build data manipulations by [Todo](#todo), but the options still seem some complicated.  Never mind, that's why I add these `TodoScripts`, to build data manipulations more and more quickly.  After the explanation about `Todo`, you will understand this part more easier.
+
+All the data manipulations are relational with **CRUD**.  **Read** is built in [`<KekkaiContainer />`](#KekkaiContainer), so I built **Create**, **Update** and **Delete** in `TodoScripts`, as follows:
+- **CREATE**: `TodoScripts.CREATE(options)`<br>
+The allowed option contents are:
+  - **`concat`**
+
+- **UPDATE**: `TodoScripts.UPDATE(options)`<br>
+
+- **REMOVE**: `TodoScripts.REMOVE(options)`<br>
 
 by Taco (tabacotaco@gmail.com)
