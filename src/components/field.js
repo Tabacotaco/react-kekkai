@@ -65,7 +65,7 @@ export default class KekkaiField extends Component {
     );
 
     return $editor.length === 0 ? true : (({ props: { required = false, validation = () => true } }) =>
-      required && isEmpty(dataModel[name]) ? false : validation(dataModel[name], dataModel)
+      required && isEmpty(dataModel[name]) ? false : validation(name, dataModel[name], dataModel)
     )($editor[0]) === true;
   }
 

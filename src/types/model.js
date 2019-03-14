@@ -167,7 +167,7 @@ export default class KekkaiModel {
       $name === name
     ).map(({ props: { label, children = [] } }) =>
       toArray(children).map(({ props: { required = false, validation = () => true } }) =>
-        required && isEmpty(this[name]) ? `${label} 必須輸入.` : validation(this[name], this)
+        required && isEmpty(this[name]) ? `${label} 必須輸入.` : validation(name, this[name], this)
       )[0]
     )[0];
 

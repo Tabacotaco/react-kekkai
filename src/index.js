@@ -6,7 +6,7 @@ import { LayoutOpts } from 'types/layout';
 
 import Todo, {
   Trigger as TriggerOpts,
-  EditingMode as EditingModeOpts,
+  EditingMode as EditingOpts,
   BasicTodo as TodoScripts
 } from 'types/todo';
 
@@ -22,7 +22,7 @@ export {
   // Enums
   LayoutOpts,
   TriggerOpts,
-  EditingModeOpts,
+  EditingOpts,
 
   // Todo Helper
   Todo,

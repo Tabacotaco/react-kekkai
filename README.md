@@ -4,10 +4,10 @@ It's a component library for React, and named 'Kekkai'(Japanese). Let's see Kekk
 - [About Install](#about-install)
 - [Import Kekkai](#import-kekkai)
 - [5 Components](#5-components)
-- [API](#api)
-  - [Components API](#components-api)
-  - [Options API](#options-api)
-  - [Types API](#types-api)
+- [API Documentation](#api-documentation)
+  - [Components](#components)
+  - [Options](#options)
+  - [Base Types](#base-types)
 
 ## What is Kekkai
 Kekkai provided 5 components to build the common data layout(such as Form / Grid / Card).  You could use the same way to build the layout through these Kekkai components, and change layout via easy setting.
@@ -56,7 +56,7 @@ import {
   KekkaiContainer, KekkaiDataview, KekkaiField, KekkaiDisplay, KekkaiEditor,
 
   // Option Enums
-  LayoutOpts, TriggerOpts, EditingModeOpts,
+  LayoutOpts, TriggerOpts, EditingOpts,
 
   // Operations Building Helper
   Todo, TodoScripts
@@ -67,24 +67,24 @@ import 'react-kekkai/dist/index.css';
 
 ## 5 Components
 Using this pattern concept to accomplish building the different layout via the only one way.  It will reduce our work for HTML, and make sure all the layout could follow the same business rule.  Now, let's check the purposes of these 5 components:
-- `<KekkaiContainer />` ([API](#KekkaiContainer-))<br>
+- `<KekkaiContainer />` ([API Documentation](#KekkaiContainer-))<br>
   1 `<KekkaiContainer />` means 1 data source, all the data will work under the container.  `<KekkaiContainer />` is responsible for privding a basic Toolbar / Pagination, and allocating HTML Layout Panel.
 
-- `<KekkaiDataview />` ([API](#KekkaiDataview-))<br>
+- `<KekkaiDataview />` ([API Documentation](#KekkaiDataview-))<br>
   1 `<KekkaiDataview />` means 1 data, so there will be many `<KekkaiDataview />` in 1 `<KekkaiContainer />`.  We use `<KekkaiDataview />` to pack the data columns(field), and it provided Data-Row Selection / Menu.
 
-- `<KekkaiField />` ([API](#KekkaiField-))<br>
+- `<KekkaiField />` ([API Documentation](#KekkaiField-))<br>
   `<KekkaiField />` is used to pack Display and Editor, and responsible for switching them by data status on the right time.  So, we don't need to use any skill to make up the switching control.  It could also define the column layout under the different panel.
 
-- `<KekkaiDisplay />` ([API](#KekkaiDisplay-))<br>
+- `<KekkaiDisplay />` ([API Documentation](#KekkaiDisplay-))<br>
   `<KekkaiField />` has provided a default `<KekkaiDisplay />` to show value.  If you wanna use different ways or format to show the value, you could override it by your own.  This is responsibility of `<KekkaiDisplay />`.
 
-- `<KekkaiEditor />` ([API](#KekkaiEditor-))<br>
+- `<KekkaiEditor />` ([API Documentation](#KekkaiEditor-))<br>
   When data need to be edited, we could use `<KekkaiEditor />` to pack the form items.  We could also bind the events to append rule to control editable status / handle data changed / do validation and tip, and make every form item be unified into one solution by these 3 events.  By the way, the form item which is packed by `<KekkaiEditor />` must have supported properties of 'value' and 'onChange'.
 
-## API
+## API Documentation
 After the introduction of Kekkai, let's see the API to know how to use Kekkai.  (PS. '*' means required.)
-### Components API
+### Components
 #### `<KekkaiContainer />`
 - ##### Options(props)
   - *`ref`: `string`<br>
@@ -292,25 +292,94 @@ After the introduction of Kekkai, let's see the API to know how to use Kekkai.  
   Only for `LayoutOpts.List`.  Kekkai will build a filter feature on the header which is like Excel.  This option could define filter condition, such as `'eq'` / `'like'`.  See your request parameter format to decide it.
 
 #### `<KekkaiDisplay />`
-- ##### Options(props)
-- ##### Events
-- ##### Methods
+There isn't not any options for this component.  It's just used to pack the value format.
 
 #### `<KekkaiEditor />`
 - ##### Options(props)
-- ##### Events
-- ##### Methods
+  - `required`: `boolean`<br>
+  Set value as be required when user edits, default is `false`.
 
-### Options API
+  - `editable`: `boolean` | `(value, data) => boolean`<br>
+  This option will be used before Kekkai switch to edit mode.  If this option value is `false` or return `false`, that means this column wouldn't be switched to edit mode.
+    - Parameters
+      - `value`: `any` - The current field value.
+
+      - `data`: [KekkaiModel](#KekkaiModel) - The data record.
+
+    - Return: `boolean`<br>
+    Return `true` or `false` to tell Kekkai this column is able to be swtiched to edit mode.
+
+- ##### Events
+  - `onChange`: `(name, value, data) => void`<br>
+  This event is fired when field value changed.
+    - Parameters
+      - `name`: `string` - The field name of data.
+
+      - `value`: `any` - The new value.
+
+      - `data`: [KekkaiModel](#KekkaiModel) - The data record.
+
+  - `validation`: `(name, value, data) => true | string`<br>
+  This event is fired after `onChange`, and we could check the data validation in this event.  If data is valid, please return `true`, or return the error message tip.  Kekkai will popup a message tip when it get the error message.
+    - Parameters
+      - `name`: `string` - The field name of data.
+
+      - `value`: `any` - The new value.
+
+      - `data`: [KekkaiModel](#KekkaiModel) - The data record.
+    
+    - Return: `true` | `string`<br>
+    `true` means valid, and `string` is error message.
+
+### Options
 #### LayoutOpts
+This option will be used in [`<KekkaiContainer />`](##kekkaicontainer-).  There are 3 kinds layout, see as follows:
+- Card: `LayoutOpts.Card`<br>
+Card layout is built by `Layout-Grid` & `Components-Card` from Bootstrap 4.0.  We could use it to show multiple data, and it's RWD design.  Under this panel, there isn't any Data-Row Selection, all the manipulations about Selection and Row Double Click will become to be triggered by Data-Row Menu.<br><br>
+PS. I wanna append data sort feature on the label in the future.
+
+- Form: `LayoutOpts.Form`<br>
+Form layout is built by `Layout-Grid` from Bootstrap 4.0, and it's also RWD design.  In Kekkai, if set `panel` as `LayoutOpts.Form`, the `pageSize` will become to `1`.  Yes, it means show only one data in Kekkai, so all the manipulations about data could only be triggered by Toolbar.  By the way, when Kekkai wanna generate a popup modal of single data, the content layout in modal are form the options of form.
+
+- List: `LayoutOpts.List`<br>
+Show data by list.  List layout has 2 blocks: one is locked on the left, and one is scrollable on the right.  Under this panel, user could adjust the columns layout, such as width / hidden / order / locked / data sort, and also could use data filter feature on the header.  It distributes the manipulations into 4 kinds: Toolbar / Selection / Row Menu / Row Double Click.
 
 #### TriggerOpts
+This option will be bound in [Todo](#Todo) or [TodoScripts](#TodoScripts).  Kekkai distributes the manipulations about data into 4 kinds, and all the triggered ways are different. As follows:
+- TOOLBAR: `TriggerOpts.TOOLBAR`<br>
+It means a initially state.  It will be default shown on the Toolbar, but if user selects any data, the toolbar buttons will be hidden(become to Selection-Mode).
 
-#### EditingModeOpts
+- SELECTION: `TriggerOpts.SELECTION`<br>
+This trigger is different from TOOLBAR, and it means Selection-Mode.  When user selects data through Data-Row Selection, the selection button will be visible on the Toolbar.
+
+- ROW_MENU: `TriggerOpts.ROW_MENU`<br>
+It means single-selection, so Kekkai will build a menu to show them on the row.  This menu will only be visible when there isn't any data which is selected or on editing.
+
+- ROW_DBCLICK: `TriggerOpts.ROW_DBCLICK`<br>
+This trigger also means single-selection, but there could be only one [Todo](#Todo) set as ROW_DBCLICK at most.  
+
+#### EditingOpts
+If you want to set data as editable when [Todo](#Todo) is executing, you need to bind this option to [Todo](#Todo).
+- INLINE: `EditingOpts.INLINE`<br>
+Means inline editing, edit data with popup modal.  It's for multiple case.
+
+- POPUP: `EditingOpts.POPUP`<br>
+Means editing by popup modal, and it's for single case.
 
 #### RWD Options
+This option is base on Bootstrap 4.0, and it was designed from the default 5 sizes from Boostrap.
+- Default type is `{ def, sm, md, lg, xl }`
+  - `def`: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.  Default is `12`.
 
-### Types API
+  - `sm`: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.
+
+  - `md`: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.
+
+  - `lg`: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.
+
+  - `xl`: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.
+
+### Base Types
 #### KekkaiModel
 
 #### KekkaiPager
