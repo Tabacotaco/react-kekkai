@@ -417,7 +417,7 @@ const basicTodo = {
       ref,
       text,
       icon,
-      confirmMsg,
+      confirmMsg: !confirmMsg ? undefined : confirmMsg,
       responseMsg,
 
       executable({ list, data }) {

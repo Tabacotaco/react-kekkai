@@ -351,7 +351,7 @@ There isn't not any options for this component.  It's just used to pack the valu
     `true` means valid, and `string` is error message.
 
 ### Options
-#### LayoutOpts
+#### `LayoutOpts`
 This option will be used in [`<KekkaiContainer />`](##kekkaicontainer-).  There are 3 kinds layout, see as follows:
 - **Card**: `LayoutOpts.Card`<br>
 Card layout is built by `Layout-Grid` & `Components-Card` from Bootstrap 4.0.  We could use it to show multiple data, and it's RWD design.  Under this panel, there isn't any Data-Row Selection, all the manipulations about Selection and Row Double Click will become to be trigger by Data-Row Menu.<br><br>
@@ -363,7 +363,7 @@ Form layout is built by `Layout-Grid` from Bootstrap 4.0, and it's also RWD desi
 - **List**: `LayoutOpts.List`<br>
 Show data by list.  List layout has 2 blocks: one is locked on the left, and one is scrollable on the right.  Under this panel, user could adjust the columns layout, such as width / hidden / order / locked / data sort, and also could use data filter feature on the header.  It distributes the manipulations into 4 kinds: Toolbar / Selection / Row Menu / Row Double Click.
 
-#### TriggerOpts
+#### `TriggerOpts`
 This option will be bound in [Todo](#Todo) or [TodoScripts](#TodoScripts).  Kekkai distributes the manipulations about data into 4 kinds, and all the trigger ways are different. As follows:
 - **TOOLBAR**: `TriggerOpts.TOOLBAR`<br>
 It means a initially state.  It will be default shown on the Toolbar, but if user selects any data, the toolbar buttons will be hidden(become to Selection-Mode).
@@ -377,7 +377,7 @@ It means single-selection, so Kekkai will build a menu to show them on the row. 
 - **ROW_DBCLICK**: `TriggerOpts.ROW_DBCLICK`<br>
 This trigger also means single-selection, but there could be only one [Todo](#Todo) set as ROW_DBCLICK at most.  
 
-#### EditingOpts
+#### `EditingOpts`
 If you want to set data as editable when [Todo](#Todo) is executing, you need to bind this option to [Todo](#Todo).
 - **INLINE**: `EditingOpts.INLINE`<br>
 Means inline editing, edit data with popup modal.  It's for multiple case.
@@ -385,7 +385,7 @@ Means inline editing, edit data with popup modal.  It's for multiple case.
 - **POPUP**: `EditingOpts.POPUP`<br>
 Means editing by popup modal, and it's for single case.
 
-#### RWD Options
+#### `RWD Options`
 This option is base on Bootstrap 4.0, and it was designed from the default 5 sizes from Boostrap.
 - **Default type is `{ def, sm, md, lg, xl }`**
   - **`def`**: `false` | `number`<br>
@@ -404,7 +404,7 @@ This option is base on Bootstrap 4.0, and it was designed from the default 5 siz
   Allowed numbers are between 1 ~ 12, and `false` means hidden.
 
 ### Base Types
-#### KekkaiModel
+#### `KekkaiModel`
 This type is built in `<KekkaiContainer />` when it get the data JSON array, so we don't need to construct it by ourself.
 - **Readonly Properties**
   - **`[data field name]`**: `any`<br>
@@ -472,7 +472,7 @@ This type is built in `<KekkaiContainer />` when it get the data JSON array, so 
   - **`$undo(): void`**<br>
   Remove all the modifieds to restore data to initially, but couldn't remove new created data.
 
-#### KekkaiPager
+#### `KekkaiPager`
 This type is built in `<KekkaiContainer />`, so we never and ever need to construct it by ourself.  We could get this pager from `<KekkaiContainer />`.pager, and then override its options.
 - **Readonly Properties**
   - **`pageSize`** - `number`<br>
@@ -509,7 +509,7 @@ This type is built in `<KekkaiContainer />`, so we never and ever need to constr
   - **`toLast(): void`**<br>
   Go to the last page.
 
-#### Todo
+#### `Todo`
 Kekkai provided this type to let us build data manipulations more quickly.  Though constructing `Todo`, we don't need to put `<button />` on HTML, and also think how to accomplish the control rules.  All the controls are packed in Kekkai, we just set options and inject checking/executing function at most.  Let's see how to build the `Todo`:
 ```
 new Todo({
@@ -597,16 +597,67 @@ new Todo({
 
       - ***`content`**: `string` | `React Element` - The message content.
 
-#### TodoScripts
+#### `TodoScripts`
 Finally, even we could build data manipulations by [Todo](#todo), but the options still seem some complicated.  Never mind, that's why I add these `TodoScripts`, to build data manipulations more and more quickly.  After the explanation about `Todo`, you will understand this part more easier.
 
-All the data manipulations are relational with **CRUD**.  **Read** is built in [`<KekkaiContainer />`](#KekkaiContainer), so I built **Create**, **Update** and **Delete** in `TodoScripts`, as follows:
+All the data manipulations are relational with **CRUD**.  **Read** is built in [`<KekkaiContainer />`](#KekkaiContainer), so I built **Create**, **Update** and **Delete** in `TodoScripts`, and packed the `<KekkaiContainer />` method in these scripts(it means we don't have to know when need to call `setExecuting` / `add` / `edit` ...).  As follows:
 - **CREATE**: `TodoScripts.CREATE(options)`<br>
-The allowed option contents are:
-  - **`concat`**
+Use this script to build created manipulation, the most important is you need to return a JSON values in `overrideParams`.  Let's see what options are allowed or what you can override in this script:<br>
+```
+    TodoScripts.CREATE({
+      editingMode,       // Default is EditingOpts.POPUP
+      ref,               // * Required
+      text,              // * Required
+      concat,
+      icon,
+      executable,
+      onSuccess,
+      responseMsg,       // Default is { type: 'success', icon: 'fa fa-check-square-o', content: '資料已完成新增' }
+      overrideParams() { // * Required, must return new JSON data in this function
+        return {
+          fullName: 'Tom',
+          age: 13
+        };
+      }
+    });
+```
 
 - **UPDATE**: `TodoScripts.UPDATE(options)`<br>
+In this script, `overrideParams` is not a required option, and add `trigger` could be override.
+```
+    TodoScripts.UPDATE({
+      trigger,               // Default is TriggerOpts.ROW_DBCLICK
+      editingMode,           // Default is EditingOpts.POPUP
+      ref,                   // * Required
+      text,                  // * Required
+      concat,
+      icon,
+      executable,
+      onSuccess,
+      responseMsg,           // Default is { type: 'success', icon: 'fa fa-check-square-o', content: '資料已完成修改' }
+      overrideParams(data) { // Set default value before editing.
+        data.age = parseFloat(data.age);
+      }
+    })
+```
 
-- **REMOVE**: `TodoScripts.REMOVE(options)`<br>
+- **DELETE**: `TodoScripts.DELETE(options)`<br>
+There are too many ways to trigger `DELETE`, so this script doesn't provide a default value.  If you don't need to confirm with user when executing, please set `confirmMsg` as `undefined` or `false`.  The `overrideParams` isn't also a required option, but if you wanna change data values before sending request, you'll need it.
+```
+    TodoScripts.DELETE({
+      trigger,               // * Required
+      ref,                   // * Required
+      text,                  // * Required
+      concat,
+      icon,
+      executable,
+      onSuccess,
+      confirmMsg,            // Default is { type: 'info', icon: 'fa fa-question-circle', title: '資料即將被刪除', content: '確定刪除所選取之資料 ?' }
+      responseMsg,           // Default is { type: 'success', icon: 'fa fa-check-square-o', content: '資料已完成修改' }
+      overrideParams(data) { // Change data values before sending request
+        data.age = null;
+      }
+    })
+```
 
 by Taco (tabacotaco@gmail.com)
