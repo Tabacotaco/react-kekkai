@@ -334,41 +334,41 @@ There isn't not any options for this component.  It's just used to pack the valu
 ### Options
 #### LayoutOpts
 This option will be used in [`<KekkaiContainer />`](##kekkaicontainer-).  There are 3 kinds layout, see as follows:
-- Card: `LayoutOpts.Card`<br>
+- ##### Card: `LayoutOpts.Card`<br>
 Card layout is built by `Layout-Grid` & `Components-Card` from Bootstrap 4.0.  We could use it to show multiple data, and it's RWD design.  Under this panel, there isn't any Data-Row Selection, all the manipulations about Selection and Row Double Click will become to be triggered by Data-Row Menu.<br><br>
 PS. I wanna append data sort feature on the label in the future.
 
-- Form: `LayoutOpts.Form`<br>
+- ##### Form: `LayoutOpts.Form`<br>
 Form layout is built by `Layout-Grid` from Bootstrap 4.0, and it's also RWD design.  In Kekkai, if set `panel` as `LayoutOpts.Form`, the `pageSize` will become to `1`.  Yes, it means show only one data in Kekkai, so all the manipulations about data could only be triggered by Toolbar.  By the way, when Kekkai wanna generate a popup modal of single data, the content layout in modal are form the options of form.
 
-- List: `LayoutOpts.List`<br>
+- ##### List: `LayoutOpts.List`<br>
 Show data by list.  List layout has 2 blocks: one is locked on the left, and one is scrollable on the right.  Under this panel, user could adjust the columns layout, such as width / hidden / order / locked / data sort, and also could use data filter feature on the header.  It distributes the manipulations into 4 kinds: Toolbar / Selection / Row Menu / Row Double Click.
 
 #### TriggerOpts
 This option will be bound in [Todo](#Todo) or [TodoScripts](#TodoScripts).  Kekkai distributes the manipulations about data into 4 kinds, and all the triggered ways are different. As follows:
-- TOOLBAR: `TriggerOpts.TOOLBAR`<br>
+- ##### TOOLBAR: `TriggerOpts.TOOLBAR`<br>
 It means a initially state.  It will be default shown on the Toolbar, but if user selects any data, the toolbar buttons will be hidden(become to Selection-Mode).
 
-- SELECTION: `TriggerOpts.SELECTION`<br>
+- ##### SELECTION: `TriggerOpts.SELECTION`<br>
 This trigger is different from TOOLBAR, and it means Selection-Mode.  When user selects data through Data-Row Selection, the selection button will be visible on the Toolbar.
 
-- ROW_MENU: `TriggerOpts.ROW_MENU`<br>
+- ##### ROW_MENU: `TriggerOpts.ROW_MENU`<br>
 It means single-selection, so Kekkai will build a menu to show them on the row.  This menu will only be visible when there isn't any data which is selected or on editing.
 
-- ROW_DBCLICK: `TriggerOpts.ROW_DBCLICK`<br>
+- ##### ROW_DBCLICK: `TriggerOpts.ROW_DBCLICK`<br>
 This trigger also means single-selection, but there could be only one [Todo](#Todo) set as ROW_DBCLICK at most.  
 
 #### EditingOpts
 If you want to set data as editable when [Todo](#Todo) is executing, you need to bind this option to [Todo](#Todo).
-- INLINE: `EditingOpts.INLINE`<br>
+- ##### INLINE: `EditingOpts.INLINE`<br>
 Means inline editing, edit data with popup modal.  It's for multiple case.
 
-- POPUP: `EditingOpts.POPUP`<br>
+- ##### POPUP: `EditingOpts.POPUP`<br>
 Means editing by popup modal, and it's for single case.
 
 #### RWD Options
 This option is base on Bootstrap 4.0, and it was designed from the default 5 sizes from Boostrap.
-- Default type is `{ def, sm, md, lg, xl }`
+- ##### Default type is `{ def, sm, md, lg, xl }`
   - `def`: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.  Default is `12`.
 
   - `sm`: `false` | `number` - Allowed numbers are between 1 ~ 12, and `false` means hidden.
