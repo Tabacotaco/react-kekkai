@@ -1,6 +1,8 @@
 # react-kekkai
 It's a component library for React, and named 'Kekkai'(Japanese). Let's see Kekkai via the agenda as follows:
 - [What is Kekkai?](#what-is-kekkai)
+- [Demo Page](https://tabacotaco.github.io/react-kekkai-example/)
+- [Git Example](https://github.com/Tabacotaco/react-kekkai-example)
 - [About Install](#about-install)
 - [Import Kekkai](#import-kekkai)
 - [5 Components](#5-components)
