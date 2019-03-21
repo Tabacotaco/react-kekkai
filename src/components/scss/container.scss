@@ -1,6 +1,6 @@
 body.kekkai-snack-mask::after {
   content: "";
-  position: absolute;
+  position: fixed;
   z-index: 99;
   top: 0;
   bottom: 0;
