@@ -11,12 +11,12 @@ div.kekkai-container.card {
   }
   &>div.kekkai-card-panel {
     overflow-x: hidden;
-    &>div{
+    &>div {
       padding: 2px 0 12px 0;
       margin: 0 -6px;
       display: flex;
       flex-wrap: wrap;
-      &>div.kekkai-dataview{
+      &>div.kekkai-dataview {
         padding: 0 6px;
         &>div.card {
           position: relative;
@@ -26,25 +26,29 @@ div.kekkai-container.card {
           word-wrap: break-word;
           background-color: #fff;
           background-clip: border-box;
-          border: 1px solid rgba(0,0,0,.125);
-          box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+          border: 1px solid rgba(0, 0, 0, .125);
+          box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
           border-radius: .25rem;
           margin-bottom: 12px;
-      
           &>div.card-header {
             border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
-            padding: .75rem 1.25rem 0 1.25rem;
+            padding: .375rem 1.25rem;
             margin-bottom: 0;
+            background-color: rgba(0, 0, 0, 0);
+            border-color: rgba(0, 0, 0, 0);
             &>div.kekkai-dropdown {
               margin-right: -18px;
               font-size: 18px;
               float: right;
             }
           }
-      
           &>div.card-body {
             flex: 1 1 auto;
             padding: 1.25rem 3px;
+            &>div.kekkai-field>div.form-group>label {
+              text-align: left;
+              font-weight: 700;
+            }
           }
         }
       }

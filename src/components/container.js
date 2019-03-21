@@ -74,6 +74,7 @@ export default class KekkaiContainer extends Component {
         : LayoutOpts.Card === panel ? generateCardOptions(this[Symbols.initData]) : []
     )(this.props.panel),
 
+    isLoading: false,
     data: [],
     filters: [],
     executing: { todo: null, data: null, popup: false },
@@ -183,29 +184,33 @@ export default class KekkaiContainer extends Component {
   }
 
   async doRollback(showConfirm = true) {
+    const { loadingMask = false } = this.props;
     const $container = this;
     const targets = this.data;
     const list = [...targets];
     const modifieds = this.modifieds; // 已異動過的資料
 
-    if (modifieds.length === 0 || !showConfirm) {
-      targets.forEach(data => data.$isNew ? list.splice(list.indexOf(data), 1) : data.$undo(false));
-      this.setState({ data: list });
-    } else return await (new Promise((resolve) => {
-      $container.setConfirm('確認放棄目前已變更之資料 ?', {
-        type: 'warning',
-        title: '請確認',
-        icon: 'fa fa-question',
-        callbackFn(isAllowed = false) {
-          if (!isAllowed)
-            resolve(false);
-          else {
-            targets.forEach(data => data.$isNew ? list.splice(list.indexOf(data), 1) : data.$undo(false));
-            $container.setState({ data: list }, () => resolve());
+    await this.setState({ isLoading: loadingMask }, async () => {
+      if (modifieds.length === 0 || !showConfirm) {
+        targets.forEach(data => data.$isNew ? list.splice(list.indexOf(data), 1) : data.$undo(false));
+        this.setState({ isLoading: false, data: list });
+      } else return await (new Promise((resolve) => {
+        $container.setConfirm('確認放棄目前已變更之資料 ?', {
+          type: 'warning',
+          title: '請確認',
+          icon: 'fa fa-question',
+          callbackFn(isAllowed = false) {
+            if (!isAllowed)
+              resolve(false);
+            else {
+              targets.forEach(data => data.$isNew ? list.splice(list.indexOf(data), 1) : data.$undo(false));
+              $container.setState({ isLoading: false, data: list }, () => resolve());
+            }
           }
-        }
-      });
-    }));
+        });
+      }));
+
+    });
   }
 
   async doSearch(filters = [], specifyPage = 1) {
@@ -223,33 +228,47 @@ export default class KekkaiContainer extends Component {
   }
 
   async doCommit() {
-    const { onCommit = () => { } } = this.props;
+    const { loadingMask = false, onCommit = () => { } } = this.props;
     const { executing: { todo = null, data = null } } = this.state;
     const isAll = todo === null;
-    const { success = false, msg = '' } = await onCommit(
-      isAll ? KekkaiContainer.CommitAll : todo.ref,
-      isAll ? { modifieds: this.modifieds, removes: [] } : { target: data }
-    );
 
-    if (!isAll)
-      todo.onResponse({ success, msg });
-    else if (!success) this.setAlert(msg, {
-      type: 'danger',
-      icon: 'fa fa-exclamation-circle'
-    });
-    else {
-      this.setAlert('已完成資料異動', {
-        type: 'success',
-        icon: 'fa fa-check-square-o'
+    await this.setState({ isLoading: loadingMask }, async () => {
+      const { success = false, msg = '' } = await onCommit(
+        isAll ? KekkaiContainer.CommitAll : todo.ref,
+        isAll ? { modifieds: this.modifieds, removes: [] } : { target: data }
+      );
+
+      this.setState({ isLoading: false }, () => {
+        if (!isAll)
+          todo.onResponse({ success, msg });
+        else if (!success) this.setAlert(msg, {
+          type: 'danger',
+          icon: 'fa fa-exclamation-circle'
+        });
+        else {
+          this.setAlert('已完成資料異動', {
+            type: 'success',
+            icon: 'fa fa-check-square-o'
+          });
+          this.doSearch(this.state.filters, this.pager.page);
+        }
       });
-      this.doSearch(this.state.filters, this.pager.page);
-    }
+    });
   }
 
 
   // FIXME: Private Properties
   get [Symbols.getContainerClassName]() {
+    const { isLoading = false } = this.state;
     const cls = ['kekkai-container'];
+
+    if (isLoading) {
+      const windowHeight = window.innerHeight || 0;
+      const ownerHeight = this.refs.container.clientHeight || 0;
+
+      cls.push('kekkai-loading');
+      cls.push(ownerHeight > windowHeight ? 'sticky' : 'absolute');
+    }
 
     switch (this.panel) {
       case LayoutOpts.Card: cls.push('card'); break;
@@ -316,15 +335,21 @@ export default class KekkaiContainer extends Component {
   };
 
   [Symbols.onRefresh] = async () => {
-    const { getSearchResponse = () => { } } = this.props;
+    const { loadingMask = false, getSearchResponse = () => { } } = this.props;
     const { filters = [], sort = [] } = this.state;
-    const { data = [], total = 0 } = (await getSearchResponse({
-      filters: filters.map(({ name, operator, value }) => ({ name, operator, value })),
-      sort,
-      page: this.pager.params
-    })) || {};
 
-    this.setState({ data: data.map(json => new KekkaiModel(this, json)) }, () => this.pager.total = total);
+    await this.setState({ isLoading: loadingMask }, async () => {
+      const { data = [], total = 0 } = (await getSearchResponse({
+        filters: filters.map(({ name, operator, value }) => ({ name, operator, value })),
+        sort,
+        page: this.pager.params
+      })) || {};
+  
+      this.setState({
+        isLoading: false,
+        data: data.map(json => new KekkaiModel(this, json))
+      }, () => this.pager.total = total);
+    })
   };
 
   [Symbols.onCloseMessage] = (msgName, btn) => {
@@ -424,7 +449,7 @@ export default class KekkaiContainer extends Component {
     const { bgColor, txColor } = this;
 
     return (
-      <div className={this[Symbols.getContainerClassName]}>
+      <div ref="container" className={this[Symbols.getContainerClassName]}>
 
         {/* FIXME: Confirm Message */}
         {this[Symbols.isModalOpen] ? null : (

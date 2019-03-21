@@ -11,10 +11,10 @@ import 'scss/modal.scss';
 function Header({ title, icon, bgColor, txColor, onClose = () => { } }) {
   return (
     <div className="header" style={{ backgroundColor: bgColor, color: txColor }}>
-      <h3 className="title">
+      <h4 className="title">
         {'string' !== typeof icon || icon.trim().length === 0 ? null : (<i className={icon} />)}
         {title}
-      </h3>
+      </h4>
 
       <button type="button" className="close" onClick={onClose} style={{ color: txColor }}>
         <span>&times;</span>

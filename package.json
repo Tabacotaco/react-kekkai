@@ -1,6 +1,6 @@
 {
   "name": "react-kekkai",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Kekkai component for React",
   "license": "MIT",
   "main": "dist/index.js",
@@ -10,8 +10,7 @@
   },
   "scripts": {
     "start": "webpack --mode=production",
-    "build": "babel src -d dist",
-    "test": "cd.. && cd iuap_train_example && npm i file:../react-kekkai"
+    "test": "npm start && cd.. && cd react-kekkai-example && npm i file:../react-kekkai"
   },
   "keywords": [
     "react",

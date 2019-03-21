@@ -2,6 +2,7 @@ div.kekkai-container>div.kekkai-list-panel {
   padding: 4px;
   border-radius: 4px;
   border: 1px solid #e9e9e9;
+  background-color: white;
   &>div {
     display: flex;
     &:not(.data-not-found) {

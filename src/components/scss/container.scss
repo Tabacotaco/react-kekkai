@@ -60,7 +60,6 @@ button.kekkai-btn {
   user-select: none;
   border: 1px solid transparent;
   padding: .375rem .75rem;
-  font-size: 1.4rem;
   line-height: 1.5;
   border-radius: .25rem;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
@@ -195,8 +194,11 @@ div.kekkai-snackbar {
       }
       &>div {
         width: 100%;
-        &>h3.snackbar-title {
+        font-size: 14px;
+
+        &>h4.snackbar-title {
           margin: 0 0 16px 0;
+          font-size: 22px !important;
         }
       }
     }
@@ -204,7 +206,7 @@ div.kekkai-snackbar {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      padding: 1rem;
+      padding: 0 1rem;
       border-top: 1px solid #dee2e6;
       border-bottom-right-radius: .3rem;
       border-bottom-left-radius: .3rem;
@@ -563,15 +565,59 @@ div.kekkai-snackbar {
 // TODO: KekkaiContainer
 div.kekkai-container {
   position: relative;
-  font-family: "微軟正黑體", -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: "微軟正黑體", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 14px;
   font-weight: 400;
   line-height: 1.4;
   padding: 4px;
   box-sizing: border-box;
-
-  *, &::after, &::before, ::after, ::before {
+  *,
+  &::after,
+  &::before,
+  ::after,
+  ::before {
     box-sizing: border-box;
+  }
+  &.kekkai-loading {
+    & * {
+      pointer-events: none !important;
+      user-select: none !important;
+    }
+    &.sticky::before {
+      position: sticky;
+      margin-top: -48px;
+      top: 50%;
+      left: calc(50% - 24px);
+    }
+    &.absolute::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -24px;
+      margin-left: -24px;
+    }
+    &::before {
+      display: block;
+      font: normal normal normal 14px/1 FontAwesome;
+      content: "\f110";
+      font-size: 48px;
+      width: 48px;
+      z-index: 51;
+      color: white;
+      animation: tabaco-loading-rotate infinite 4s linear;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      outline: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 50;
+      background-color: rgba(0, 0, 0, .5);
+    }
   }
   div.data-not-found {
     position: relative;
@@ -679,7 +725,49 @@ div.kekkai-container {
   }
 }
 
+@keyframes tabaco-loading-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  12.5% {
+    transform: rotate(45deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  37.5% {
+    transform: rotate(135deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  62.5% {
+    transform: rotate(225deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  87.5% {
+    transform: rotate(315deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 575px) {
+  div.kekkai-container>nav.kekkai-navbar.pagerbar {
+    li.index-info,
+    input.pager-input {
+      display: none !important;
+    }
+  }
+}
+
 @media (max-width: 767px) {
+  div.kekkai-container div.kekkai-field>div.form-group>label {
+    text-align: left !important;
+  }
   div.kekkai-container div.kekkai-field>div.form-group>* {
     flex: 0 0 100%;
     max-width: 100%;

@@ -13,9 +13,9 @@ function Btn({ icon, disabled = false, children = [], onClick = () => { } }) {
   );
 }
 
-export function NavText({ children }) {
+export function NavText({ className, children }) {
   return (
-    <li><a>{children}</a></li>
+    <li {...{ className }}><a>{children}</a></li>
   );
 }
 

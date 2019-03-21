@@ -43,7 +43,7 @@ export function SnackbarContent({ icon, title, content, btns = [], [Symbols.onTr
 
         <div>
           {'string' !== typeof title || title.trim().length === 0 ? null : (
-            <h3 className="snackbar-title">{title}</h3>
+            <h4 className="snackbar-title">{title}</h4>
           )}
 
           {content}

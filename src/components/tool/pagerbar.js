@@ -40,7 +40,7 @@ export default function KekkaiPagerbar({ bgColor, txColor, pager: $p, onRefresh 
       </Nav>
 
       <Nav align="right">
-        <NavText>顯示 {$p.start}-{$p.end} 筆 / 共 {$p.maxPage} 頁</NavText>
+        <NavText className="index-info">顯示 {$p.start}-{$p.end} 筆 / 共 {$p.maxPage} 頁</NavText>
 
         {$p.total === 0 ? null : (
           <NavBtn icon="fa fa-refresh" onClick={onRefresh} />
