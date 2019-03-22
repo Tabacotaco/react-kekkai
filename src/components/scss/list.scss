@@ -151,12 +151,18 @@ div.kekkai-container>div.kekkai-list-panel {
                 text-align: left;
               }
             }
-            &.filter-header>form {
-              display: flex;
-              align-items: center;
-              font-weight: normal;
-              &>div.kekkai-editor>* {
-                width: 100%;
+            &.filter-header{
+              padding: 0;
+              &>form {
+                display: flex;
+                align-items: center;
+                font-weight: normal;
+                &>div.kekkai-editor{
+                  margin-bottom: -1px;
+                  &>* {
+                    width: 100%;
+                  }
+                }
               }
             }
             &>div {
