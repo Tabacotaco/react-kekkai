@@ -95,8 +95,11 @@ export class HeaderFilter extends Component {
     this.forceUpdate(() => this.doFilter());
   };
 
-  doFilter = () => {
+  doFilter = (e) => {
     const { container, name, filterUID, filter } = this.props;
+
+    e.preventDefault();
+    e.stopPropagation();
 
     container[HeaderFilter.doFilter](filterUID, { name, operator: filter, value: this.currFilterVal });
   };
