@@ -7,7 +7,7 @@ import { NavMenu, NavBtn } from 'tool/navbar';
 import { CheckboxSelection } from 'tool/selection';
 
 import { Trigger } from 'types/todo';
-import { LayoutOpts } from 'types/layout';
+import { DropdownColors, LayoutOpts } from 'types/layout';
 import { toArray, getGridClassName, bindListRowSyncEvents } from 'types/util';
 
 
@@ -116,7 +116,7 @@ export default class KekkaiDataview extends Component {
   // TODO: Do React Render
   render() {
     const { owner, container, manager, dataModel, locked = false, onDropdownMenu = () => { } } = this.props;
-    const { bgColor, txColor } = container;
+    const { bdColor, bgColor, txColor } = container;
 
     const dbclickTodos = manager.getAllowedTodos(Trigger.ROW_DBCLICK, { targetData: dataModel });
     const menuTodos = locked || LayoutOpts.Card === this.panel ? manager.getAllowedTodos(Trigger.ROW_MENU, { targetData: dataModel }) : [];
@@ -137,10 +137,10 @@ export default class KekkaiDataview extends Component {
 
       case LayoutOpts.Card: return (
         <div className={this[Symbols.getCardRowClassName]}>
-          <div className="card container">
+          <div className="card container" style={{ borderColor: bdColor }}>
             {menuTodos.length === 0 ? null : (
               <div className="card-header">
-                <NavMenu bgColor="#f7f7f7" txColor="#5c6b77" align="right" onOpen={() => onDropdownMenu(true)} onClose={() => onDropdownMenu(false)} display={(
+                <NavMenu {...DropdownColors} align="right" onOpen={() => onDropdownMenu(true)} onClose={() => onDropdownMenu(false)} display={(
                   <i className="fa fa-bars" />
                 )}>
                   {menuTodos.map(todo => (

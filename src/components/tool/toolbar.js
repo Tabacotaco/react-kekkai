@@ -54,14 +54,17 @@ export default class KekkaiToolbar extends Component {
   }
 
   render() {
-    const $tbar = this;
     const { bgColor, txColor, manager } = this.props;
-    const container = manager.container;
 
-    return (
+    const $tbar = this;
+    const items = this.navitems;
+    const container = manager.container;
+    const isVisible = items.length > 0 || container.modifieds.length > 0 || container.editings.length > 0;
+
+    return !isVisible ? null : (
       <Navbar className="toolbar" style={{ backgroundColor: bgColor, color: txColor }}>
         <Nav>
-          {this.navitems.map(({ type, key, $todo }) => Symbols.button === type ?
+          {items.map(({ type, key, $todo }) => Symbols.button === type ?
             (
               <NavBtn key={$todo.uuid} icon={$todo.icon} onClick={() => $todo.execute($tbar.getExecuteParams($todo))}>
                 {$todo.text}

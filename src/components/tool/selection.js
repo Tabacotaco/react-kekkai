@@ -40,13 +40,12 @@ export class AllSelection extends Component {
   render() {
     const { container, rowSpan = 1 } = this.props;
     const { data = [], selecteds = [] } = container;
-    const { toolBgColor: color = '#007bff' } = container.props;
     const checked = selecteds.length > 0 && selecteds.length === data.length;
 
     return (
       <th className="row-selection" rowSpan={rowSpan}>
         <CheckboxSelection {...{
-          color,
+          color: container.bgColor,
           checked,
           visible: container.editings.length === 0,
           indeterminate: !checked && selecteds.length > 0,

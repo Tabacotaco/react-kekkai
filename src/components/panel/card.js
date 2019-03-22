@@ -23,7 +23,7 @@ export default class CardPanel extends Component {
   onDropdownMenu = (isOpen = false) => this.setState({ dropdowning: isOpen });
 
   render() {
-    const { owner, container, manager, sort = [], options = [], children = [] } = this.props;
+    const { children = [] } = this.props;
 
     return (
       <div className="kekkai-card-panel">

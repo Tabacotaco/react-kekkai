@@ -277,7 +277,7 @@ export default class ListPanel extends Component {
     );
 
     return (
-      <div className="kekkai-list-panel">
+      <div className="kekkai-list-panel" style={{ borderColor: container.bdColor }}>
         <div className={container.editings.length > 0 ? 'editing' : ''}>
 
           {/* TODO: Locked Header */}

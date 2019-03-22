@@ -17,10 +17,10 @@ export default class FormPanel extends Component {
   }
 
   render() {
-    const { children = [] } = this.props;
+    const { container, children = [] } = this.props;
 
     return (
-      <div className="kekkai-form-panel container">
+      <div className="kekkai-form-panel container" style={{ borderColor: container.bdColor }}>
         {toArray(children).length > 0 ? null : (<div className="data-not-found" />)}
 
         {toArray(children).map(view => (

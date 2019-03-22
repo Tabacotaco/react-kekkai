@@ -5,10 +5,12 @@ import ListPanel from 'panel/list';
 import { NavMenu, MenuDivider, NavBtn } from 'tool/navbar';
 
 import KekkaiModel from 'types/model';
+
+import { DropdownColors } from 'types/layout';
 import { toArray, isEmpty } from 'types/util';
 
 
-const bgColor = '#f7f7f7', txColor = '#5c6b77';
+const { bdColor, bgColor, txColor } = DropdownColors;
 
 export class ColumnMenu extends Component {
 
@@ -26,7 +28,7 @@ export class ColumnMenu extends Component {
 
     return (
       <div className="header locked menu">
-        <NavMenu align="right" bgColor={bgColor} txColor={txColor} display={(
+        <NavMenu align="right" {...{ bdColor, bgColor, txColor }} display={(
           <i className="fa fa-bars" />
         )}>
           {[
@@ -173,7 +175,7 @@ export class HeaderColumn extends Component {
     } = this.props;
 
     return !lockable && !hideable ? null : (
-      <NavMenu align="right" bgColor={bgColor} txColor={txColor} display={(
+      <NavMenu align="right" {...{ bdColor, bgColor, txColor }} display={(
         <i className="fa fa-angle-down" />
       )}>
         {!lockable ? null : (

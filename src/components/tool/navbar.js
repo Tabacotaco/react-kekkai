@@ -93,7 +93,7 @@ export class NavMenu extends Component {
   };
 
   render() {
-    const { tag = 'div', display, bgColor, txColor, children = [] } = this.props;
+    const { tag = 'div', display, bgColor, bdColor = 'none', txColor, children = [] } = this.props;
     const { show } = this.state;
 
     return React.createElement(tag, {
@@ -107,6 +107,7 @@ export class NavMenu extends Component {
           display: show ? 'block' : 'none',
           backgroundColor: bgColor,
           color: txColor,
+          ...('none' === bdColor ? {} : { border: `1px solid ${bdColor}` }),
           ...this.positionCSS
         }}>
           {toArray(children).filter(({ type }) => [NavBtn, MenuDivider].indexOf(type) >= 0).map((item) =>

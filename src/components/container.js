@@ -112,9 +112,11 @@ export default class KekkaiContainer extends Component {
   // TODO: Readonly Properties
   get panel() { return this.props.panel || LayoutOpts.List; }
 
-  get bgColor() { return this.props.toolBgColor || '#007bff'; }
+  get bdColor() { return this.props.bdColor || '#d6d8db'; }
 
-  get txColor() { return this.props.toolTxColor || 'white'; }
+  get bgColor() { return this.props.bgColor || '#007bff'; }
+
+  get txColor() { return this.props.txColor || 'white'; }
 
   get pager() { return this[this.state.$PagerSymbol]; }
 
@@ -190,27 +192,24 @@ export default class KekkaiContainer extends Component {
     const list = [...targets];
     const modifieds = this.modifieds; // 已異動過的資料
 
-    await this.setState({ isLoading: loadingMask }, async () => {
-      if (modifieds.length === 0 || !showConfirm) {
-        targets.forEach(data => data.$isNew ? list.splice(list.indexOf(data), 1) : data.$undo(false));
-        this.setState({ isLoading: false, data: list });
-      } else return await (new Promise((resolve) => {
-        $container.setConfirm('確認放棄目前已變更之資料 ?', {
-          type: 'warning',
-          title: '請確認',
-          icon: 'fa fa-question',
-          callbackFn(isAllowed = false) {
-            if (!isAllowed)
-              resolve(false);
-            else {
-              targets.forEach(data => data.$isNew ? list.splice(list.indexOf(data), 1) : data.$undo(false));
-              $container.setState({ isLoading: false, data: list }, () => resolve());
-            }
+    if (modifieds.length === 0 || !showConfirm) {
+      targets.forEach(data => data.$isNew ? list.splice(list.indexOf(data), 1) : data.$undo(false));
+      this.setState({ data: list });
+    } else return await (new Promise((resolve) => {
+      $container.setConfirm('確認放棄目前已變更之資料 ?', {
+        type: 'warning',
+        title: '請確認',
+        icon: 'fa fa-question',
+        callbackFn(isAllowed = false) {
+          if (!isAllowed)
+            resolve(false);
+          else {
+            targets.forEach(data => data.$isNew ? list.splice(list.indexOf(data), 1) : data.$undo(false));
+            $container.setState({ data: list }, () => resolve());
           }
-        });
-      }));
-
-    });
+        }
+      });
+    }));
   }
 
   async doSearch(filters = [], specifyPage = 1) {
@@ -443,7 +442,6 @@ export default class KekkaiContainer extends Component {
 
   // TODO: Do React Render
   render() {
-    const $container = this;
     const { $GroupSymbol, sort, columns } = this.state;
     const { owner } = this.props;
     const { bgColor, txColor } = this;
