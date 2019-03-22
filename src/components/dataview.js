@@ -186,7 +186,7 @@ export default class KekkaiDataview extends Component {
 
           {menuTodos.length === 0 ? null : (
             <td className="row-menu">
-              <NavMenu bgColor="#f7f7f7" txColor="#5c6b77" onOpen={() => onDropdownMenu(true)} onClose={() => onDropdownMenu(false)} display={(
+              <NavMenu {...DropdownColors} onOpen={() => onDropdownMenu(true)} onClose={() => onDropdownMenu(false)} display={(
                 <i className="fa fa-bars" />
               )}>
                 {menuTodos.map(todo => (
