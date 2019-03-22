@@ -1,6 +1,6 @@
 {
   "name": "react-kekkai",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Kekkai component for React",
   "license": "MIT",
   "main": "dist/index.js",
