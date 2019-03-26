@@ -33,22 +33,8 @@ The pattern about using 5 components is...
 In Japanese, 'Kekkai' means magic circle, and the pattern just looks like a magic circle, so I named it as 'Kekkai' ^^.
 
 ## About Install
-- 1. Download from NPM<br>
-  `npm i react moment numeral react-kekkai -s`
-- 2. Update your webpack.config.js<br>
-  Find `resolve.alias`, and append as follows:
-  ```
-  resolve: {
-    extensions: [/* Your extensions ... */],
-    alias: {
-      react: path.resolve('./node_modules/react'),
-      moment: path.resolve('./node_modules/moment'),
-      numeral: path.resolve('./node_modules/numeral'),
-
-      /* Your alias ... */
-    }
-  }
-  ```
+Download from NPM
+`npm i react moment numeral react-kekkai -s`
 
 ## Import Kekkai
 Except the kekkai components, also import the CSS.
