@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    'index': './src/index.js'
+    'index': ['@babel/polyfill', './src/index.js']
   },
   externals: {
     'react': 'commonjs react',

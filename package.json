@@ -1,6 +1,6 @@
 {
   "name": "react-kekkai",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Kekkai component for React",
   "license": "MIT",
   "main": "dist/index.js",
@@ -10,7 +10,6 @@
   },
   "scripts": {
     "start": "webpack --mode=production",
-    "postinstall": "npm link ../react",
     "test": "npm start && cd.. && cd react-kekkai-example && npm i file:../react-kekkai"
   },
   "keywords": [
@@ -33,6 +32,7 @@
     "@babel/core": "^7.3.4",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.3.4",
@@ -50,7 +50,7 @@
     "react": "^16.8.4",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3"
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.4"
   }
 }
